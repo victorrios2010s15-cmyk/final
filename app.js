@@ -19,9 +19,17 @@ const evaluaciones = [
     id: "his_1",
     fecha: "2026-11-03",
     materia: "CRP",
-    tipo: "Examen",
-    descripcion: "Los circulos",
-    criterio: "A cuaderno cerrado.",
+    tipo: "Formato Cajetin",
+    descripcion: "Circulos",
+    criterio: "Los circulos a cudaerno cerrado, en el cual son todos los circulos vistos en clase.",
+  },
+  {
+    id: "his_1",
+    fecha: "2026-11-05",
+    materia: "CS de la Tierra",
+    tipo: "Mapa Mental",
+    descripcion: "Placas Tectonicas",
+    criterio: "Mapa mental en clase sobre todo lo visto referente al tema, en el cual se traen todos los materiales, se incia en el salon y termina en el (no acepta fuera del salon).",
   },
 ];
 
