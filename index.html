@@ -61,7 +61,7 @@
         Notification.requestPermission().then((permission) => {
           if (permission === 'granted') {
             messaging.getToken({
-              vapidKey: 'TU_CLAVE_PUBLICA_VAPID',
+              vapidKey: 'BK-dzHKqZUPt0Mgc1eyqzhrbF6ib78_gfLTvDGGz6QjYwVgtAV7qXUFcfaFKN-yyNDfNklvja7TOP5VeHbZz_rs',
               serviceWorkerRegistration: registration
             }).then((currentToken) => {
               if (currentToken) {
