@@ -4,7 +4,7 @@ const evaluaciones = [
     fecha: "2026-11-03",
     materia: "Castellano",
     tipo: "Exposicion",
-    descripcion: "Expociosion grupo de la tesis sobre el Cap 1.",
+    descripcion: "Expocision, grupo de la tesis sobre el Cap 1.",
     criterio: "Lamina nada mas.",
   },
   {
