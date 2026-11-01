@@ -4,10 +4,8 @@ const evaluaciones = [
     fecha: "2026-11-03",
     materia: "Castellano",
     tipo: "Exposicion",
-    descripcion:
-      "Expociosion grupo de la tesis sobre el Cap 1.",
-    criterio:
-      "Lamina nada mas.",
+    descripcion: "Expociosion grupo de la tesis sobre el Cap 1.",
+    criterio: "Lamina nada mas.",
   },
   {
     id: "fis_1",
@@ -23,11 +21,11 @@ const evaluaciones = [
     materia: "CRP",
     tipo: "Examen",
     descripcion: "Los circulos",
-    criterio:
-      "A cuaderno cerrado.",
+    criterio: "A cuaderno cerrado.",
   },
 ];
 
+// 1. Registro corregido hacia el Service Worker de Firebase
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("firebase-messaging-sw.js").then((reg) => {
     if (Notification.permission === "default") {
@@ -39,7 +37,7 @@ if ("serviceWorker" in navigator) {
 function obtenerFechaLocal() {
   const hoy = new Date();
   const offset = hoy.getTimezoneOffset();
-  return new Date(hoy.getTime() - offset * 60 * 1000).toISOString().split("T");
+  return new Date(hoy.getTime() - offset * 60 * 1000).toISOString().split("T")[0];
 }
 
 function verificarCambiosLocales() {
@@ -83,10 +81,9 @@ function verificarCambiosLocales() {
       Notification.permission === "granted"
     ) {
       navigator.serviceWorker.ready.then((registration) => {
-        registration.active.postMessage({
-          type: "PUSH_CAMBIO",
-          titulo: tituloNotif,
-          cuerpo: cuerpoNotif,
+        registration.showNotification(tituloNotif, {
+          body: cuerpoNotif,
+          icon: "/favicon.ico"
         });
       });
     }
@@ -122,22 +119,29 @@ function renderTimeline() {
         `${ev.materia} (${diasRestantes === 0 ? "Hoy" : diasRestantes === 1 ? "Mañana" : "En 2 días"})`,
       );
 
+      // 2. Control de Notificación de 2 días (Para no repetirla mil veces)
+      const claveNotif = `notificado_2dias_${ev.id}_${ev.fecha}`;
+      const yaNotificado = localStorage.getItem(claveNotif);
+
       if (
+        diasRestantes === 2 && 
+        !yaNotificado &&
         "serviceWorker" in navigator &&
         Notification.permission === "granted"
       ) {
         navigator.serviceWorker.ready.then((registration) => {
-          registration.active.postMessage({
-            type: "PUSH_LOCAL",
-            materia: ev.materia,
-            dias: diasRestantes,
+          registration.showNotification(`⚠️ Evaluación en 2 días: ${ev.materia}`, {
+            body: `Recuerda: ${ev.tipo} (${ev.descripcion}). Criterio: ${ev.criterio}`,
+            icon: "/favicon.ico"
           });
+          // Guardamos marca en la memoria local para enviarla una sola vez por evaluación
+          localStorage.setItem(claveNotif, "true");
         });
       }
     }
 
     const partesFecha = ev.fecha.split("-");
-    const fechaFormateada = `${partesFecha}/${partesFecha}/${partesFecha}`;
+    const fechaFormateada = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0]}`;
 
     let textoDias = `Faltan ${diasRestantes} días`;
     if (diasRestantes === 0) textoDias = "¡Es Hoy!";
@@ -182,3 +186,4 @@ function renderTimeline() {
 }
 
 document.addEventListener("DOMContentLoaded", renderTimeline);
+
