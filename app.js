@@ -2,20 +2,20 @@ const evaluaciones = [
   {
     id: "mat_1",
     fecha: "2026-11-03",
-    materia: "Matemáticas",
-    tipo: "Examen",
+    materia: "Castellano",
+    tipo: "Exposicion",
     descripcion:
-      "Funciones reales, dominio y rango. Ejercicios prácticos en pizarra.",
+      "Expociosion grupo de la tessis sobre el Cap 1.",
     criterio:
-      "Uso de formulario permitido. Traer hojas milimetradas y calculadora.",
+      "Lamina nada mas.",
   },
   {
     id: "fis_1",
     fecha: "2026-11-04",
-    materia: "Física",
-    tipo: "Examen Escrito",
-    descripcion: "Práctica número 3 sobre Movimiento Parabólico y caída libre.",
-    criterio: "Informe en parejas. Entrega Obligatoria al finalizar la sesión.",
+    materia: "Orientacion",
+    tipo: "Expocision",
+    descripcion: "Exposicion sobre los metodos anticonceptivos.",
+    criterio: "Lamina con IA.",
   },
   {
     id: "his_1",
