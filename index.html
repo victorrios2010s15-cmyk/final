@@ -32,6 +32,57 @@
         <div class="timeline-container" id="timeline"></div>
     </main>
 
+    <!-- SDKs de Firebase (Versión compatible con etiquetas script normales) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
+
+<script>
+  // Tu configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_PROJECT_ID.firebaseapp.com",
+    projectId: "TU_PROJECT_ID",
+    storageBucket: "TU_PROJECT_ID.appspot.com",
+    messagingSenderId: "TU_SENDER_ID",
+    appId: "TU_APP_ID"
+  };
+
+  // Inicializar Firebase
+  firebase.initializeApp(firebaseConfig);
+  const messaging = firebase.messaging();
+
+  // Pedir permisos y registrar Service Worker al cargar la página
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/final/firebase-messaging-sw.js')
+      .then((registration) => {
+        console.log("Service Worker registrado con éxito:", registration);
+
+        // Solicitar permiso de notificaciones
+        Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') {
+            messaging.getToken({
+              vapidKey: 'TU_CLAVE_PUBLICA_VAPID',
+              serviceWorkerRegistration: registration
+            }).then((currentToken) => {
+              if (currentToken) {
+                console.log("TOKEN DE ESTE DISPOSITIVO:", currentToken);
+                // Aquí puedes guardar el token si lo deseas
+              } else {
+                console.log('No se pudo obtener el token de registro.');
+              }
+            }).catch((err) => {
+              console.log('Ocurrió un error al obtener el token: ', err);
+            });
+          } else {
+            console.log('Permiso de notificación denegado.');
+          }
+        });
+      })
+      .catch((err) => {
+        console.log('Fallo el registro del Service Worker: ', err);
+      });
+  }
+</script>
     <script src="app.js"></script>
 </body>
 </html>
