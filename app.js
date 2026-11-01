@@ -9,7 +9,7 @@ const evaluaciones = [
   },
   {
     id: "fis_1",
-    fecha: "2026-11-03",
+    fecha: "2026-11-04",
     materia: "Orientacion",
     tipo: "Expocision",
     descripcion: "Exposicion sobre los metodos anticonceptivos.",
@@ -17,7 +17,7 @@ const evaluaciones = [
   },
   {
     id: "his_1",
-    fecha: "2026-11-12",
+    fecha: "2026-11-03",
     materia: "CRP",
     tipo: "Examen",
     descripcion: "Los circulos",
