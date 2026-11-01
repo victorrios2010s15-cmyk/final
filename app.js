@@ -1,3 +1,14 @@
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+        appId: "839c031a-c293-45f1-ab97-3e03e752c901",
+        safari_web_id: "",
+        notifyButton: {
+            enable: false,
+        },
+    });
+});
+
 const evaluaciones = [
   {
     id: "mat_1",
