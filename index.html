@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Comandos Estudiantil</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+    <header>
+        <div class="logo">Liceo Control</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#evaluaciones">Evaluaciones</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="evaluaciones">
+        <section class="hero">
+            <h1>Panel de Evaluaciones</h1>
+            <p>Cronograma dinámico sincronizado para la sección</p>
+        </section>
+
+        <div class="alert-banner" id="global-alert">
+            <div class="alert-icon"></div>
+            <div class="alert-text" id="global-alert-text"></div>
+        </div>
+
+        <div class="timeline-container" id="timeline"></div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
