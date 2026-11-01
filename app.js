@@ -29,7 +29,7 @@ const evaluaciones = [
 ];
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js").then((reg) => {
+  navigator.serviceWorker.register("firebase-messaging-sw.js").then((reg) => {
     if (Notification.permission === "default") {
       Notification.requestPermission();
     }
