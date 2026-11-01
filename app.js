@@ -5,13 +5,13 @@ const evaluaciones = [
     materia: "Castellano",
     tipo: "Exposicion",
     descripcion:
-      "Expociosion grupo de la tessis sobre el Cap 1.",
+      "Expociosion grupo de la tesis sobre el Cap 1.",
     criterio:
       "Lamina nada mas.",
   },
   {
     id: "fis_1",
-    fecha: "2026-11-04",
+    fecha: "2026-11-03",
     materia: "Orientacion",
     tipo: "Expocision",
     descripcion: "Exposicion sobre los metodos anticonceptivos.",
