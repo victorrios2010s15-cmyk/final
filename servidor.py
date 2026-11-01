@@ -26,7 +26,7 @@ def revisar_cronograma():
             
             if dias_restantes == 2:
                 print(f"Alerta: {ev['materia']} vence en 2 días. Despertando sistema...")
-                webbrowser.open("http://127.0.0.1:8080")
+                webbrowser.open("https://victorrios2010s15-cmyk.github.io/final/")
                 break
     except Exception as e:
         print(f"Error: {e}")
