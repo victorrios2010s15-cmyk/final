@@ -100,6 +100,7 @@ function verificarCambiosLocales() {
 }
 
 function renderTimeline() {
+    sincronizarConNubeSegura();
   const container = document.getElementById("timeline");
   const alertBanner = document.getElementById("global-alert");
   const alertText = document.getElementById("global-alert-text");
@@ -194,4 +195,47 @@ function renderTimeline() {
 }
 
 document.addEventListener("DOMContentLoaded", renderTimeline);
+
+// Función segura para sincronizar con la nube sin romper la página
+function sincronizarConNubeSegura() {
+  try {
+    if (typeof firebase !== 'undefined' && firebase.firestore) {
+      const db = firebase.firestore();
+      evaluaciones.forEach((ev) => {
+        db.collection("evaluaciones").doc(ev.id).set(ev, { merge: true })
+          .catch((error) => {
+            console.log("Aviso de sincronización offline:", error);
+          });
+      });
+    }
+  } catch (e) {
+    console.log("Firestore no está inicializado todavía, usando modo local.");
+  }
+}
+
+// Registrar el token del dispositivo en Firestore para las notificaciones en la nube
+if (typeof messaging !== 'undefined' && typeof db !== 'undefined') {
+  messaging.getToken({ vapidKey: 'BK-dzHKqZUPt0Mgc1eyqzhrbF6ib78_gfLTvDGGz6QjYwVgtAV7qXUFcfaFKN-yyNDfNklvja7TOP5VeHbZz_rs' })
+    .then((currentToken) => {
+      if (currentToken) {
+        // Guardar o actualizar el token en la colección "tokens" de Firestore
+        db.collection("tokens").doc(currentToken).set({
+          token: currentToken,
+          dispositivo: "Tecno Spark 10C",
+          actualizado: new Date()
+        })
+        .then(() => {
+          console.log("¡Token del dispositivo registrado en la nube con éxito!");
+        })
+        .catch((error) => {
+          console.error("Error al guardar el token en Firestore:", error);
+        });
+      } else {
+        console.log("No se encontró un token de registro disponible.");
+      }
+    })
+    .catch((err) => {
+      console.log("Error al obtener el token de mensajería: ", err);
+    });
+}
 
