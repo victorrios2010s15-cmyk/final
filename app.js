@@ -24,7 +24,7 @@ const evaluaciones = [
     criterio: "Los circulos a cudaerno cerrado, en el cual son todos los circulos vistos en clase.",
   },
   {
-    id: "his_1",
+    id: "his_2",
     fecha: "2026-11-05",
     materia: "CS de la Tierra",
     tipo: "Mapa Mental",
