@@ -20,11 +20,11 @@ const evaluaciones = [
   {
     id: "his_1",
     fecha: "2026-11-12",
-    materia: "Historia",
-    tipo: "Exposición",
-    descripcion: "Análisis conceptual y causas de la Segunda Guerra Mundial.",
+    materia: "CRP",
+    tipo: "Examen",
+    descripcion: "Los circulos",
     criterio:
-      "Láminas de soporte técnico visibles. Máximo 10 minutos por grupo.",
+      "A cuaderno cerrado.",
   },
 ];
 
