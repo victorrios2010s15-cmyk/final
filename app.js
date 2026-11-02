@@ -239,3 +239,172 @@ if (typeof messaging !== 'undefined' && typeof db !== 'undefined') {
     });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  let fechaActual = new Date();
+  let mesActual = fechaActual.getMonth();
+  let anioActual = fechaActual.getFullYear();
+
+  const meses = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
+
+  function renderizarCalendario() {
+    const contenedorDias = document.getElementById("calendar-days");
+    const textoMesAnio = document.getElementById("calendar-month-year");
+    if (!contenedorDias || !textoMesAnio) return;
+
+    contenedorDias.innerHTML = "";
+    textoMesAnio.textContent = `${meses[mesActual]} ${anioActual}`;
+
+    // Primer día del mes y total de días
+    const primerDiaIndex = new Date(anioActual, mesActual, 1).getDay();
+    const totalDias = new Date(anioActual, mesActual + 1, 0).getDate();
+
+    // Espacios vacíos previos al primer día de la semana
+    for (let i = 0; i < primerDiaIndex; i++) {
+      const divVacio = document.createElement("div");
+      divVacio.style.background = "transparent";
+      divVacio.style.cursor = "default";
+      contenedorDias.appendChild(divVacio);
+    }
+
+    // Dibujar los días del mes
+    for (let dia = 1; dia <= totalDias; dia++) {
+      const divDia = document.createElement("div");
+      divDia.textContent = dia;
+      
+      // Opcional: Resaltar el día actual
+      const hoy = new Date();
+      if (dia === hoy.getDate() && mesActual === hoy.getMonth() && anioActual === hoy.getFullYear()) {
+        divDia.style.border = "2px solid #00d2ff";
+      }
+
+      contenedorDias.appendChild(divDia);
+    }
+  }
+
+  // Botones para cambiar de mes
+  const btnPrev = document.getElementById("prev-month");
+  const btnNext = document.getElementById("next-month");
+
+  if (btnPrev && btnNext) {
+    btnPrev.addEventListener("click", () => {
+      mesActual--;
+      if (mesActual < 0) {
+        mesActual = 11;
+        anioActual--;
+      }
+      renderizarCalendario();
+    });
+
+    btnNext.addEventListener("click", () => {
+      mesActual++;
+      if (mesActual > 11) {
+        mesActual = 0;
+        anioActual++;
+      }
+      renderizarCalendario();
+    });
+  }
+
+  // Inicializar calendario al cargar
+  renderizarCalendario();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  let fechaActual = new Date();
+  let mesActual = fechaActual.getMonth();
+  let anioActual = fechaActual.getFullYear();
+  let fechasEvaluaciones = [];
+
+  const meses = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
+
+  // Inicializar Firestore (asumiendo que 'db' ya está disponible o lo inicializas aquí)
+  const db = firebase.firestore();
+
+  // Escuchar las evaluaciones en tiempo real desde Firestore
+  db.collection("evaluaciones").onSnapshot((snapshot) => {
+    fechasEvaluaciones = [];
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data.fecha) {
+        fechasEvaluaciones.push(data.fecha); 
+      }
+    });
+    renderizarCalendario();
+  });
+
+  function renderizarCalendario() {
+    const contenedorDias = document.getElementById("calendar-days");
+    const textoMesAnio = document.getElementById("calendar-month-year");
+    if (!contenedorDias || !textoMesAnio) return;
+
+    contenedorDias.innerHTML = "";
+    textoMesAnio.textContent = `${meses[mesActual]} ${anioActual}`;
+
+    const primerDiaIndex = new Date(anioActual, mesActual, 1).getDay();
+    const totalDias = new Date(anioActual, mesActual + 1, 0).getDate();
+
+    // Espacios vacíos para alinear el primer día de la semana
+    for (let i = 0; i < primerDiaIndex; i++) {
+      const divVacio = document.createElement("div");
+      divVacio.style.background = "transparent";
+      divVacio.style.cursor = "default";
+      contenedorDias.appendChild(divVacio);
+    }
+
+    // Dibujar los días del mes
+    for (let dia = 1; dia <= totalDias; dia++) {
+      const divDia = document.createElement("div");
+      divDia.textContent = dia;
+
+      const mesFormateado = String(mesActual + 1).padStart(2, '0');
+      const diaFormateado = String(dia).padStart(2, '0');
+      const fechaClave = `${anioActual}-${mesFormateado}-${diaFormateado}`;
+
+      // Si la fecha coincide con una evaluación, se pinta de fucsia
+      if (fechasEvaluaciones.includes(fechaClave)) {
+          divDia.classList.add("tiene-evaluacion");
+      }
+
+      // Resaltar el día actual con un borde azul
+      const hoy = new Date();
+      if (dia === hoy.getDate() && mesActual === hoy.getMonth() && anioActual === hoy.getFullYear()) {
+        divDia.style.border = "2px solid #00d2ff";
+      }
+
+      contenedorDias.appendChild(divDia);
+    }
+  }
+
+  // Botones para cambiar de mes
+  const btnPrev = document.getElementById("prev-month");
+  const btnNext = document.getElementById("next-month");
+
+  if (btnPrev && btnNext) {
+    btnPrev.addEventListener("click", () => {
+      mesActual--;
+      if (mesActual < 0) {
+        mesActual = 11;
+        anioActual--;
+      }
+      renderizarCalendario();
+    });
+
+    btnNext.addEventListener("click", () => {
+      mesActual++;
+      if (mesActual > 11) {
+        mesActual = 0;
+        anioActual++;
+      }
+      renderizarCalendario();
+    });
+  }
+
+  // Inicializar calendario al cargar
+  renderizarCalendario();
+});

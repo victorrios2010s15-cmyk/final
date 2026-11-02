@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <!-- Firebase App (Core) -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<!-- Firebase Messaging (Notificaciones) -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
-<!-- Firebase Firestore (Base de datos) -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Messaging (Notificaciones) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
+    <!-- Firebase Firestore (Base de datos) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -20,34 +20,103 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="#evaluaciones">Evaluaciones</a></li>
+                <li><a href="#calendario">Calendario</a></li>
+                <li><a href="#horario">Horario</a></li>
             </ul>
         </nav>
     </header>
 
-    <main id="evaluaciones">
-        <section class="hero">
-            <h1>Panel de Evaluaciones</h1>
-            <p>Cronograma dinámico sincronizado para la sección</p>
+    <main>
+        <!-- SECCIÓN 1: PANEL DE EVALUACIONES -->
+        <section id="evaluaciones">
+            <div class="hero">
+                <h1>Panel de Evaluaciones</h1>
+                <p>Cronograma dinámico sincronizado para la sección</p>
+            </div>
+
+            <div class="alert-banner" id="global-alert">
+                <div class="alert-icon"></div>
+                <div class="alert-text" id="global-alert-text"></div>
+            </div>
+
+            <div class="timeline-container" id="timeline"></div>
         </section>
 
-        <div class="alert-banner" id="global-alert">
-            <div class="alert-icon"></div>
-            <div class="alert-text" id="global-alert-text"></div>
-        </div>
+        <!-- SECCIÓN 2: CALENDARIO VISUAL ESTILO ANDROID -->
+        <section id="calendario" class="section-container">
+            <h2>Calendario Escolar</h2>
+            <div class="calendar-card">
+                <div class="calendar-header">
+                    <button id="prev-month">&lt;</button>
+                    <h3 id="calendar-month-year">Cargando mes...</h3>
+                    <button id="next-month">&gt;</button>
+                </div>
+                <div class="calendar-weekdays">
+                    <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+                </div>
+                <div class="calendar-days" id="calendar-days">
+                    <!-- Los días del mes se generarán dinámicamente desde JavaScript -->
+                </div>
+            </div>
+        </section>
 
-        <div class="timeline-container" id="timeline"></div>
+ <!-- SECCIÓN 3: HORARIO DE CLASES -->
+        <section id="horario" class="section-container">
+            <h2>Horario Semanal (5to año)</h2>
+            <div class="horario-grid">
+                <!-- LUNES -->
+                <div class="dia-columna">
+                    <h3>Lunes</h3>
+                    <div class="materia-card"><span>Química</span><small>7:10 - 8:30</small></div>
+                    <div class="materia-card"><span>FSN</span><small>9:00 - 10:10</small></div>
+                    <div class="materia-card"><span>Biología</span><small>10:10 - 11:30</small></div>
+                    <div class="materia-card"><span>Matemáticas</span><small>11:30 - 1:30</small></div>
+                </div>
+                <!-- MARTES -->
+                <div class="dia-columna">
+                    <h3>Martes</h3>
+                    <div class="materia-card"><span>CRP</span><small>7:10 - 8:30</small></div>
+                    <div class="materia-card"><span>Química</span><small>9:00 - 10:10</small></div>
+                    <div class="materia-card"><span>Castellano</span><small>10:10 - 11:30</small></div>
+                    <div class="materia-card"><span>Inglés</span><small>11:30 - 1:30</small></div>
+                </div>
+                <!-- MIÉRCOLES -->
+                <div class="dia-columna">
+                    <h3>Miércoles</h3>
+                    <div class="materia-card"><span>Física</span><small>7:10 - 8:30</small></div>
+                    <div class="materia-card"><span>GHC</span><small>9:00 - 10:10</small></div>
+                    <div class="materia-card"><span>Educación Física</span><small>10:10 - 12:10</small></div>
+                    <div class="materia-card"><span>Orientación</span><small>12:10 - 1:30</small></div>
+                </div>
+                <!-- JUEVES -->
+                <div class="dia-columna">
+                    <h3>Jueves</h3>
+                    <div class="materia-card"><span>Ciencia de la Tierra</span><small>7:10 - 8:30</small></div>
+                    <div class="materia-card"><span>Matemáticas</span><small>9:00 - 10:10</small></div>
+                    <div class="materia-card"><span>Biología</span><small>10:10 - 11:30</small></div>
+                </div>
+                <!-- VIERNES -->
+                <div class="dia-columna">
+                    <h3>Viernes</h3>
+                    <div class="materia-card"><span>CRP</span><small>7:10 - 8:30</small></div>
+                    <div class="materia-card"><span>Música</span><small>9:00 - 10:10</small></div>
+                    <div class="materia-card"><span>Física</span><small>10:10 - 11:30</small></div>
+                    <div class="materia-card"><span>Inglés</span><small>11:30 - 1:30</small></div>
+                </div>
+            </div>
+        </section>
     </main>
 
 <script>
   // Tu configuración de Firebase
   const firebaseConfig = {
-  apiKey: "AIzaSyChlYEGHuaYmaTWxOHYSHsu51zFR9aJR0Q",
-  authDomain: "apptarea-585ea.firebaseapp.com",
-  projectId: "apptarea-585ea",
-  storageBucket: "apptarea-585ea.firebasestorage.app",
-  messagingSenderId: "813307226513",
-  appId: "1:813307226513:web:907a996cb3226404191230"
-};
+    apiKey: "AIzaSyChlYEGHuaYmaTWxOHYSHsu51zFR9aJR0Q",
+    authDomain: "apptarea-585ea.firebaseapp.com",
+    projectId: "apptarea-585ea",
+    storageBucket: "apptarea-585ea.firebasestorage.app",
+    messagingSenderId: "813307226513",
+    appId: "1:813307226513:web:907a996cb3226404191230"
+  };
 
   // Inicializar Firebase
   firebase.initializeApp(firebaseConfig);
@@ -59,7 +128,6 @@
       .then((registration) => {
         console.log("Service Worker registrado con éxito:", registration);
 
-        // Solicitar permiso de notificaciones
         Notification.requestPermission().then((permission) => {
           if (permission === 'granted') {
             messaging.getToken({
@@ -68,7 +136,6 @@
             }).then((currentToken) => {
               if (currentToken) {
                 console.log("TOKEN DE ESTE DISPOSITIVO:", currentToken);
-                // Aquí puedes guardar el token si lo deseas
               } else {
                 console.log('No se pudo obtener el token de registro.');
               }
@@ -88,3 +155,4 @@
     <script src="app.js"></script>
 </body>
 </html>
+
