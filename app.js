@@ -1,6 +1,6 @@
 const evaluaciones = [
   {
-    id: "01",
+    id: "mat_1",
     fecha: "2026-11-03",
     materia: "Castellano",
     tipo: "Exposicion",
@@ -8,7 +8,7 @@ const evaluaciones = [
     criterio: "Lámina nada más.",
   },
   {
-    id: "02",
+    id: "fis_1",
     fecha: "2026-11-04",
     materia: "Orientacion",
     tipo: "Exposición",
@@ -16,7 +16,7 @@ const evaluaciones = [
     criterio: "Lámina con IA.",
   },
   {
-    id: "03",
+    id: "his_1",
     fecha: "2026-11-03",
     materia: "CRP",
     tipo: "Formato Cajetin",
@@ -24,7 +24,7 @@ const evaluaciones = [
     criterio: "Los círculos a cuaderno cerrado, en el cual son todos los círculos vistos en clase.",
   },
   {
-    id: "04",
+    id: "his_2",
     fecha: "2026-11-05",
     materia: "CS de la Tierra",
     tipo: "Mapa Mental",
@@ -49,34 +49,12 @@ function obtenerFechaLocal() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 1. MODO OSCURO / CLARO ---
-  const themeToggleBtn = document.getElementById("theme-toggle");
-  const bodyElement = document.body;
-
-  const temaGuardado = localStorage.getItem("tema_preferido") || "dark-mode";
-  bodyElement.className = temaGuardado;
-  themeToggleBtn.textContent = temaGuardado === "light-mode" ? "🌙" : "☀️";
-
-  themeToggleBtn.addEventListener("click", () => {
-    if (bodyElement.classList.contains("dark-mode")) {
-      bodyElement.replace("dark-mode", "light-mode");
-      bodyElement.className = "light-mode";
-      localStorage.setItem("tema_preferido", "light-mode");
-      themeToggleBtn.textContent = "🌙";
-    } else {
-      bodyElement.className = "dark-mode";
-      localStorage.setItem("tema_preferido", "dark-mode");
-      themeToggleBtn.textContent = "☀️";
-    }
-  });
-
-   // --- 2. CUENTA REGRESIVA FIN DE AÑO (Ajusta la fecha aquí) ---
-  const fechaFinCurso = new Date("2026-12-05T23:59:59").getTime();
+  // --- 1. CUENTA REGRESIVA FIN DE AÑO (Con sorpresa interactiva) ---
+  const fechaFinCurso = new Date("2026-12-05T23:59:59").getTime(); // Cambia aquí tu fecha real
   
   function actualizarContador() {
     const ahora = new Date().getTime();
     const distancia = fechaFinCurso - ahora;
-
     const contadorDiv = document.getElementById("countdown-timer");
 
     if (distancia > 0) {
@@ -90,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("minutes").textContent = String(minutos).padStart(2, '0');
       document.getElementById("seconds").textContent = String(segundos).padStart(2, '0');
     } else {
-      // --- SORPRESA ÉPICA CUANDO LLEGUE A CERO (Ideas 3 y 4 combinadas) ---
       contadorDiv.innerHTML = `
         <div style="grid-column: span 4; background: linear-gradient(135deg, #06b6d4, #d946ef); padding: 20px; border-radius: 12px; color: white; text-align: center; box-shadow: 0 0 20px rgba(217, 70, 239, 0.5);">
           <h3 style="font-size: 1.4rem; margin-bottom: 8px;">🎓 ¡MISIÓN CUMPLIDA! 🎓</h3>
@@ -103,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
 
-      // Evento del botón sorpresa al terminar
       const btnCertificado = document.getElementById("btn-certificado");
       if (btnCertificado) {
         btnCertificado.addEventListener("click", () => {
@@ -116,13 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(actualizarContador, 1000);
   actualizarContador();
 
-  // --- 3. FRASES MOTIVACIONALES ---
+  // --- 2. FRASES MOTIVACIONALES ---
   const frases = [
-    "“No se, estudia y ya.”",
     "“Deja para mañana lo que puedes hacer hoy.”",
-    "“Hola.”",
-    "“Chao.”",
-    "“No.”"
+    "“La inteligencias te persigue, pero eres mas rapido.”",
+    "“Tranquilo, no hagas nada.”",
+    "“Camaron que se duerme se lo lleva la corriente.”",
+    "“El que estudia duda de sus conocimientos.”"
   ];
   const quoteText = document.getElementById("quote-text");
   document.getElementById("new-quote-btn").addEventListener("click", () => {
@@ -130,22 +106,59 @@ document.addEventListener("DOMContentLoaded", () => {
     quoteText.textContent = aleatoria;
   });
 
-  // --- 4. BLOC DE NOTAS RÁPIDAS (LOCALSTORAGE) ---
+  // --- 3. BLOC DE NOTAS RÁPIDAS (CREANDO TARJETAS NUEVAS) ---
   const notesArea = document.getElementById("quick-notes");
-  notesArea.value = localStorage.getItem("mis_notas_rapidas") || "";
+  const notesContainer = document.getElementById("notes-container");
+
+  function cargarNotasGuardadas() {
+    const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
+    notesContainer.innerHTML = "";
+
+    notasGuardadas.forEach((textoNota, index) => {
+      const tarjetaNota = document.createElement("div");
+      tarjetaNota.className = "note-card-item";
+      tarjetaNota.innerHTML = `
+        <p>${textoNota}</p>
+        <button class="delete-note-btn" data-index="${index}">Borrar</button>
+      `;
+      notesContainer.appendChild(tarjetaNota);
+    });
+
+    // Agregar evento a los botones de borrar
+    document.querySelectorAll(".delete-note-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const idx = e.target.getAttribute("data-index");
+        notasGuardadas.splice(idx, 1);
+        localStorage.setItem("mis_notas_tarjetas", JSON.stringify(notasGuardadas));
+        cargarNotasGuardadas();
+      });
+    });
+  }
+
   document.getElementById("save-notes-btn").addEventListener("click", () => {
-    localStorage.setItem("mis_notas_rapidas", notesArea.value);
-    alert("¡Nota guardada con éxito en tu dispositivo!");
+    const texto = notesArea.value.trim();
+    if (texto === "") {
+      alert("Escribe algo antes de agregar la nota.");
+      return;
+    }
+
+    const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
+    notasGuardadas.push(texto);
+    localStorage.setItem("mis_notas_tarjetas", JSON.stringify(notasGuardadas));
+
+    notesArea.value = ""; // Limpiar el cuadro de texto
+    cargarNotasGuardadas();
   });
 
-  // --- PANEL DE EVALUACIONES Y NOTIFICACIONES (1 y 2 días) ---
+  cargarNotasGuardadas(); // Cargar al abrir la app
+
+  // --- PANEL DE EVALUACIONES Y NOTIFICACIONES ---
   const container = document.getElementById("timeline");
   const alertBanner = document.getElementById("global-alert");
   const alertText = document.getElementById("global-alert-text");
 
   const hoyStr = obtenerFechaLocal();
   const hoy = new Date(hoyStr);
-
   let evaluacionesUrgentes = [];
 
   evaluaciones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
@@ -225,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
     alertBanner.style.display = "none";
   }
 
-  // --- CALENDARIO VISUAL ESTILO ANDROID (Marcado en Fucsia) ---
+  // --- CALENDARIO VISUAL ---
   let fechaActual = new Date();
   let mesActual = fechaActual.getMonth();
   let anioActual = fechaActual.getFullYear();
@@ -301,3 +314,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderizarCalendario();
 });
+

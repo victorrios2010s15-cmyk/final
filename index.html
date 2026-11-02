@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
 </head>
-<body class="dark-mode">
+<body>
 
     <header>
         <div class="logo">Liceo Control</div>
@@ -18,12 +18,10 @@
                 <li><a href="#horario">Horario</a></li>
             </ul>
         </nav>
-        <!-- Botón para cambiar Modo Oscuro / Claro -->
-        <button id="theme-toggle" class="theme-btn" title="Cambiar Tema">☀️</button>
     </header>
 
     <main>
-        <!-- NUEVO: CUENTA REGRESIVA FIN DE AÑO -->
+        <!-- CUENTA REGRESIVA FIN DE AÑO -->
         <section class="section-container countdown-section">
             <h2>🎉 Fin de Año Escolar (5to año)</h2>
             <div id="countdown-timer" class="countdown-grid">
@@ -49,18 +47,21 @@
             <div class="timeline-container" id="timeline"></div>
         </section>
 
-        <!-- NUEVO: BLOQUE DE FRASES MOTIVACIONALES -->
+        <!-- BLOQUE DE FRASES MOTIVACIONALES -->
         <section class="section-container quote-section">
             <h2>💡 Motivación Diaria</h2>
-            <p id="quote-text" class="quote-text">"Deje la flojera."</p>
+            <p id="quote-text" class="quote-text">"Tu puedes."</p>
             <button id="new-quote-btn" class="secondary-btn">Otra Frase</button>
         </section>
 
-        <!-- NUEVO: BLOC DE NOTAS RÁPIDAS (POST-IT) -->
+        <!-- BLOC DE NOTAS RÁPIDAS (CREA TARJETAS NUEVAS) -->
         <section class="section-container notes-section">
             <h2>📝 Notas Rápidas / Recordatorios</h2>
             <textarea id="quick-notes" placeholder="Apunta algo rápido aquí (ej. llevar cartulina mañana)..."></textarea>
-            <button id="save-notes-btn" class="secondary-btn">Guardar Nota</button>
+            <button id="save-notes-btn" class="secondary-btn">Agregar Nota</button>
+            
+            <!-- Contenedor donde aparecerán las tarjetas de notas guardadas -->
+            <div id="notes-container" class="notes-cards-container" style="margin-top: 15px;"></div>
         </section>
 
         <!-- SECCIÓN 2: CALENDARIO VISUAL ESTILO ANDROID -->
@@ -78,6 +79,7 @@
                 <div class="calendar-days" id="calendar-days"></div>
             </div>
         </section>
+
 
         <!-- SECCIÓN 3: HORARIO DE CLASES (5to año) -->
         <section id="horario" class="section-container">
@@ -124,3 +126,4 @@
     <script src="app.js"></script>
 </body>
 </html>
+
