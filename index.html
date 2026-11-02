@@ -6,14 +6,8 @@
     <title>Central de Comandos Estudiantil</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <!-- Firebase App (Core) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <!-- Firebase Messaging (Notificaciones) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
-    <!-- Firebase Firestore (Base de datos) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
-<body>
+<body class="dark-mode">
 
     <header>
         <div class="logo">Liceo Control</div>
@@ -24,9 +18,22 @@
                 <li><a href="#horario">Horario</a></li>
             </ul>
         </nav>
+        <!-- Botón para cambiar Modo Oscuro / Claro -->
+        <button id="theme-toggle" class="theme-btn" title="Cambiar Tema">☀️</button>
     </header>
 
     <main>
+        <!-- NUEVO: CUENTA REGRESIVA FIN DE AÑO -->
+        <section class="section-container countdown-section">
+            <h2>🎉 Fin de Año Escolar (5to año)</h2>
+            <div id="countdown-timer" class="countdown-grid">
+                <div><span id="days">00</span><small>Días</small></div>
+                <div><span id="hours">00</span><small>Horas</small></div>
+                <div><span id="minutes">00</span><small>Min</small></div>
+                <div><span id="seconds">00</span><small>Seg</small></div>
+            </div>
+        </section>
+
         <!-- SECCIÓN 1: PANEL DE EVALUACIONES -->
         <section id="evaluaciones">
             <div class="hero">
@@ -42,6 +49,20 @@
             <div class="timeline-container" id="timeline"></div>
         </section>
 
+        <!-- NUEVO: BLOQUE DE FRASES MOTIVACIONALES -->
+        <section class="section-container quote-section">
+            <h2>💡 Motivación Diaria</h2>
+            <p id="quote-text" class="quote-text">"El éxito es la suma de pequeños esfuerzos repetidos día tras día."</p>
+            <button id="new-quote-btn" class="secondary-btn">Otra Frase</button>
+        </section>
+
+        <!-- NUEVO: BLOC DE NOTAS RÁPIDAS (POST-IT) -->
+        <section class="section-container notes-section">
+            <h2>📝 Notas Rápidas / Recordatorios</h2>
+            <textarea id="quick-notes" placeholder="Apunta algo rápido aquí (ej. llevar cartulina mañana)..."></textarea>
+            <button id="save-notes-btn" class="secondary-btn">Guardar Nota</button>
+        </section>
+
         <!-- SECCIÓN 2: CALENDARIO VISUAL ESTILO ANDROID -->
         <section id="calendario" class="section-container">
             <h2>Calendario Escolar</h2>
@@ -54,105 +75,52 @@
                 <div class="calendar-weekdays">
                     <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
                 </div>
-                <div class="calendar-days" id="calendar-days">
-                    <!-- Los días del mes se generarán dinámicamente desde JavaScript -->
-                </div>
+                <div class="calendar-days" id="calendar-days"></div>
             </div>
         </section>
 
- <!-- SECCIÓN 3: HORARIO DE CLASES -->
+        <!-- SECCIÓN 3: HORARIO DE CLASES (5to año) -->
         <section id="horario" class="section-container">
             <h2>Horario Semanal (5to año)</h2>
             <div class="horario-grid">
-                <!-- LUNES -->
                 <div class="dia-columna">
                     <h3>Lunes</h3>
                     <div class="materia-card"><span>Química</span><small>7:10 - 8:30</small></div>
                     <div class="materia-card"><span>FSN</span><small>9:00 - 10:10</small></div>
                     <div class="materia-card"><span>Biología</span><small>10:10 - 11:30</small></div>
-                    <div class="materia-card"><span>Matemáticas</span><small>11:30 - 1:30</small></div>
+                    <div class="materia-card"><span>Matemáticas</span><small>11:30 - 12:50</small></div>
                 </div>
-                <!-- MARTES -->
                 <div class="dia-columna">
                     <h3>Martes</h3>
                     <div class="materia-card"><span>CRP</span><small>7:10 - 8:30</small></div>
                     <div class="materia-card"><span>Química</span><small>9:00 - 10:10</small></div>
-                    <div class="materia-card"><span>Castellano</span><small>10:10 - 11:30</small></div>
-                    <div class="materia-card"><span>Inglés</span><small>11:30 - 1:30</small></div>
+                    <div class="materia-card"><span>Castellano</span><small>10:10 - 12:10</small></div>
+                    <div class="materia-card"><span>Inglés</span><small>12:30 - 1:30</small></div>
                 </div>
-                <!-- MIÉRCOLES -->
                 <div class="dia-columna">
                     <h3>Miércoles</h3>
                     <div class="materia-card"><span>Física</span><small>7:10 - 8:30</small></div>
-                    <div class="materia-card"><span>GHC</span><small>9:00 - 10:10</small></div>
-                    <div class="materia-card"><span>Educación Física</span><small>10:10 - 12:10</small></div>
+                    <div class="materia-card"><span>GHC</span><small>9:00 - 10:50</small></div>
+                    <div class="materia-card"><span>Educación Física</span><small>10:50 - 12:50</small></div>
                     <div class="materia-card"><span>Orientación</span><small>12:10 - 1:30</small></div>
                 </div>
-                <!-- JUEVES -->
                 <div class="dia-columna">
                     <h3>Jueves</h3>
                     <div class="materia-card"><span>Ciencia de la Tierra</span><small>7:10 - 8:30</small></div>
                     <div class="materia-card"><span>Matemáticas</span><small>9:00 - 10:10</small></div>
                     <div class="materia-card"><span>Biología</span><small>10:10 - 11:30</small></div>
                 </div>
-                <!-- VIERNES -->
                 <div class="dia-columna">
                     <h3>Viernes</h3>
                     <div class="materia-card"><span>CRP</span><small>7:10 - 8:30</small></div>
                     <div class="materia-card"><span>Música</span><small>9:00 - 10:10</small></div>
                     <div class="materia-card"><span>Física</span><small>10:10 - 11:30</small></div>
-                    <div class="materia-card"><span>Inglés</span><small>11:30 - 1:30</small></div>
+                    <div class="materia-card"><span>Inglés</span><small>11:30 - 12:50</small></div>
                 </div>
             </div>
         </section>
     </main>
 
-<script>
-  // Tu configuración de Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyChlYEGHuaYmaTWxOHYSHsu51zFR9aJR0Q",
-    authDomain: "apptarea-585ea.firebaseapp.com",
-    projectId: "apptarea-585ea",
-    storageBucket: "apptarea-585ea.firebasestorage.app",
-    messagingSenderId: "813307226513",
-    appId: "1:813307226513:web:907a996cb3226404191230"
-  };
-
-  // Inicializar Firebase
-  firebase.initializeApp(firebaseConfig);
-  const messaging = firebase.messaging();
-
-  // Pedir permisos y registrar Service Worker al cargar la página
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/final/firebase-messaging-sw.js')
-      .then((registration) => {
-        console.log("Service Worker registrado con éxito:", registration);
-
-        Notification.requestPermission().then((permission) => {
-          if (permission === 'granted') {
-            messaging.getToken({
-              vapidKey: 'BK-dzHKqZUPt0Mgc1eyqzhrbF6ib78_gfLTvDGGz6QjYwVgtAV7qXUFcfaFKN-yyNDfNklvja7TOP5VeHbZz_rs',
-              serviceWorkerRegistration: registration
-            }).then((currentToken) => {
-              if (currentToken) {
-                console.log("TOKEN DE ESTE DISPOSITIVO:", currentToken);
-              } else {
-                console.log('No se pudo obtener el token de registro.');
-              }
-            }).catch((err) => {
-              console.log('Ocurrió un error al obtener el token: ', err);
-            });
-          } else {
-            console.log('Permiso de notificación denegado.');
-          }
-        });
-      })
-      .catch((err) => {
-        console.log('Fallo el registro del Service Worker: ', err);
-      });
-  }
-</script>
     <script src="app.js"></script>
 </body>
 </html>
-

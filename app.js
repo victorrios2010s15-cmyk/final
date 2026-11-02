@@ -1,45 +1,45 @@
 const evaluaciones = [
   {
-    id: "mat_1",
+    id: "01",
     fecha: "2026-11-03",
     materia: "Castellano",
     tipo: "Exposicion",
-    descripcion: "Expocision, grupo de la tesis sobre el Cap 1.",
-    criterio: "Lamina nada mas.",
+    descripcion: "Exposición, grupo de la tesis sobre el Cap 1.",
+    criterio: "Lámina nada más.",
   },
   {
-    id: "fis_1",
+    id: "02",
     fecha: "2026-11-04",
     materia: "Orientacion",
-    tipo: "Expocision",
-    descripcion: "Exposicion sobre los metodos anticonceptivos.",
-    criterio: "Lamina con IA.",
+    tipo: "Exposición",
+    descripcion: "Exposición sobre los métodos anticonceptivos.",
+    criterio: "Lámina con IA.",
   },
   {
-    id: "his_1",
+    id: "03",
     fecha: "2026-11-03",
     materia: "CRP",
     tipo: "Formato Cajetin",
-    descripcion: "Circulos",
-    criterio: "Los circulos a cudaerno cerrado, en el cual son todos los circulos vistos en clase.",
+    descripcion: "Círculos",
+    criterio: "Los círculos a cuaderno cerrado, en el cual son todos los círculos vistos en clase.",
   },
   {
-    id: "his_2",
+    id: "04",
     fecha: "2026-11-05",
     materia: "CS de la Tierra",
     tipo: "Mapa Mental",
-    descripcion: "Placas Tectonicas",
-    criterio: "Mapa mental en clase sobre todo lo visto referente al tema, en el cual se traen todos los materiales, se incia en el salon y termina en el (no acepta fuera del salon).",
+    descripcion: "Placas Tectónicas",
+    criterio: "Mapa mental en clase sobre todo lo visto referente al tema.",
   },
 ];
 
-// 1. Registro corregido hacia el Service Worker de Firebase
+// Registro del Service Worker
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("firebase-messaging-sw.js").then((reg) => {
     if (Notification.permission === "default") {
       Notification.requestPermission();
     }
-  });
+  }).catch((err) => console.log("SW error:", err));
 }
 
 function obtenerFechaLocal() {
@@ -48,59 +48,67 @@ function obtenerFechaLocal() {
   return new Date(hoy.getTime() - offset * 60 * 1000).toISOString().split("T")[0];
 }
 
-function verificarCambiosLocales() {
-  const stringActual = JSON.stringify(evaluaciones);
-  const stringAnterior = localStorage.getItem("cronograma_cache");
+document.addEventListener("DOMContentLoaded", () => {
+  // --- 1. MODO OSCURO / CLARO ---
+  const themeToggleBtn = document.getElementById("theme-toggle");
+  const bodyElement = document.body;
 
-  if (stringAnterior && stringAnterior !== stringActual) {
-    const listaAnterior = JSON.parse(stringAnterior);
-    let tituloNotif = "";
-    let cuerpoNotif = "";
+  const temaGuardado = localStorage.getItem("tema_preferido") || "dark-mode";
+  bodyElement.className = temaGuardado;
+  themeToggleBtn.textContent = temaGuardado === "light-mode" ? "🌙" : "☀️";
 
-    if (evaluaciones.length > listaAnterior.length) {
-      const nueva = evaluaciones.find(
-        (e) => !listaAnterior.some((a) => a.id === e.id),
-      );
-      if (nueva) {
-        tituloNotif = "🆕 Nueva Evaluación Añadida";
-        cuerpoNotif = `${nueva.materia}: ${nueva.tipo} el ${nueva.fecha}`;
-      }
-    } else if (evaluaciones.length < listaAnterior.length) {
-      const eliminada = listaAnterior.find(
-        (a) => !evaluaciones.some((e) => e.id === a.id),
-      );
-      if (eliminada) {
-        tituloNotif = "🗑️ Evaluación Cancelada";
-        cuerpoNotif = `Se eliminó la prueba de ${eliminada.materia}`;
-      }
+  themeToggleBtn.addEventListener("click", () => {
+    if (bodyElement.classList.contains("dark-mode")) {
+      bodyElement.replace("dark-mode", "light-mode");
+      bodyElement.className = "light-mode";
+      localStorage.setItem("tema_preferido", "light-mode");
+      themeToggleBtn.textContent = "🌙";
     } else {
-      evaluaciones.forEach((ev) => {
-        const ant = listaAnterior.find((a) => a.id === ev.id);
-        if (ant && JSON.stringify(ant) !== JSON.stringify(ev)) {
-          tituloNotif = "🔄 Modificado";
-          cuerpoNotif = `Cambios en ${ev.materia} (${ev.fecha})`;
-        }
-      });
+      bodyElement.className = "dark-mode";
+      localStorage.setItem("tema_preferido", "dark-mode");
+      themeToggleBtn.textContent = "☀️";
     }
+  });
 
-    if (
-      tituloNotif &&
-      "serviceWorker" in navigator &&
-      Notification.permission === "granted"
-    ) {
-      navigator.serviceWorker.ready.then((registration) => {
-        registration.showNotification(tituloNotif, {
-          body: cuerpoNotif,
-          icon: "/favicon.ico"
-        });
-      });
+  // --- 2. CUENTA REGRESIVA FIN DE AÑO (Ej. 31 de Julio de 2027) ---
+  const fechaFinCurso = new Date("2027-12-05T00:00:00").getTime();
+  function actualizarContador() {
+    const ahora = new Date().getTime();
+    const distancia = fechaFinCurso - ahora;
+
+    if (distancia > 0) {
+      document.getElementById("days").textContent = String(Math.floor(distancia / (1000 * 60 * 60 * 24))).padStart(2, '0');
+      document.getElementById("hours").textContent = String(Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+      document.getElementById("minutes").textContent = String(Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+      document.getElementById("seconds").textContent = String(Math.floor((distancia % (1000 * 60)) / 1000)).padStart(2, '0');
     }
   }
-  localStorage.setItem("cronograma_cache", stringActual);
-}
+  setInterval(actualizarContador, 1000);
+  actualizarContador();
 
-function renderTimeline() {
-    sincronizarConNubeSegura();
+  // --- 3. FRASES MOTIVACIONALES ---
+  const frases = [
+    "“No se, estudia y ya.”",
+    "“Deja para mañana lo que puedes hacer hoy.”",
+    "“Hola.”",
+    "“Chao.”",
+    "“No.”"
+  ];
+  const quoteText = document.getElementById("quote-text");
+  document.getElementById("new-quote-btn").addEventListener("click", () => {
+    const aleatoria = frases[Math.floor(Math.random() * frases.length)];
+    quoteText.textContent = aleatoria;
+  });
+
+  // --- 4. BLOC DE NOTAS RÁPIDAS (LOCALSTORAGE) ---
+  const notesArea = document.getElementById("quick-notes");
+  notesArea.value = localStorage.getItem("mis_notas_rapidas") || "";
+  document.getElementById("save-notes-btn").addEventListener("click", () => {
+    localStorage.setItem("mis_notas_rapidas", notesArea.value);
+    alert("¡Nota guardada con éxito en tu dispositivo!");
+  });
+
+  // --- PANEL DE EVALUACIONES Y NOTIFICACIONES (1 y 2 días) ---
   const container = document.getElementById("timeline");
   const alertBanner = document.getElementById("global-alert");
   const alertText = document.getElementById("global-alert-text");
@@ -109,8 +117,6 @@ function renderTimeline() {
   const hoy = new Date(hoyStr);
 
   let evaluacionesUrgentes = [];
-
-  verificarCambiosLocales();
 
   evaluaciones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
   container.innerHTML = "";
@@ -125,27 +131,23 @@ function renderTimeline() {
     const esUrgente = diasRestantes <= 2;
     if (esUrgente) {
       evaluacionesUrgentes.push(
-        `${ev.materia} (${diasRestantes === 0 ? "Hoy" : diasRestantes === 1 ? "Mañana" : "En 2 días"})`,
+        `${ev.materia} (${diasRestantes === 0 ? "Hoy" : diasRestantes === 1 ? "Mañana" : "En 2 días"})`
       );
 
-      // 2. Control de Notificación de 2 días (Para no repetirla mil veces)
-      const claveNotif = `notificado_2dias_${ev.id}_${ev.fecha}`;
-      const yaNotificado = localStorage.getItem(claveNotif);
+      if (diasRestantes === 2 || diasRestantes === 1) {
+        const claveNotif = `notificado_${diasRestantes}dias_${ev.id}_${ev.fecha}`;
+        const yaNotificado = localStorage.getItem(claveNotif);
 
-      if (
-        diasRestantes === 2 && 
-        !yaNotificado &&
-        "serviceWorker" in navigator &&
-        Notification.permission === "granted"
-      ) {
-        navigator.serviceWorker.ready.then((registration) => {
-          registration.showNotification(`⚠️ Evaluación en 2 días: ${ev.materia}`, {
-            body: `Recuerda: ${ev.tipo} (${ev.descripcion}). Criterio: ${ev.criterio}`,
-            icon: "/favicon.ico"
+        if (!yaNotificado && "serviceWorker" in navigator && Notification.permission === "granted") {
+          navigator.serviceWorker.ready.then((registration) => {
+            const textoTiempo = diasRestantes === 1 ? "¡Es MAÑANA!" : "en 2 días";
+            registration.showNotification(`⚠️ Evaluación ${textoTiempo}: ${ev.materia}`, {
+              body: `${ev.tipo}: ${ev.descripcion}. Criterio: ${ev.criterio}`,
+              icon: "/favicon.ico"
+            });
+            localStorage.setItem(claveNotif, "true");
           });
-          // Guardamos marca en la memoria local para enviarla una sola vez por evaluación
-          localStorage.setItem(claveNotif, "true");
-        });
+        }
       }
     }
 
@@ -159,25 +161,25 @@ function renderTimeline() {
     const card = document.createElement("div");
     card.className = `card ${esUrgente ? "urgent" : ""}`;
     card.innerHTML = `
-            <div class="card-header">
-                <div class="meta-info">
-                    <span class="date-badge">${fechaFormateada}</span>
-                    <h2 class="subject-title">${ev.materia}</h2>
-                </div>
-                <span class="type-tag">${ev.tipo}</span>
-            </div>
-            <div class="countdown-text">${textoDias}</div>
-            <div class="card-details">
-                <div class="detail-block">
-                    <div class="detail-label">¿De qué trata?</div>
-                    <div class="detail-value">${ev.descripcion}</div>
-                </div>
-                <div class="detail-block">
-                    <div class="detail-label">¿Cómo es la evaluación?</div>
-                    <div class="detail-value">${ev.criterio}</div>
-                </div>
-            </div>
-        `;
+      <div class="card-header">
+          <div class="meta-info">
+              <span class="date-badge">${fechaFormateada}</span>
+              <h2 class="subject-title">${ev.materia}</h2>
+          </div>
+          <span class="type-tag">${ev.tipo}</span>
+      </div>
+      <div class="countdown-text">${textoDias}</div>
+      <div class="card-details">
+          <div class="detail-block">
+              <div class="detail-label">¿De qué trata?</div>
+              <div class="detail-value">${ev.descripcion}</div>
+          </div>
+          <div class="detail-block">
+              <div class="detail-label">¿Cómo es la evaluación?</div>
+              <div class="detail-value">${ev.criterio}</div>
+          </div>
+      </div>
+    `;
 
     card.addEventListener("click", () => {
       card.classList.toggle("active");
@@ -192,54 +194,8 @@ function renderTimeline() {
   } else {
     alertBanner.style.display = "none";
   }
-}
 
-document.addEventListener("DOMContentLoaded", renderTimeline);
-
-// Función segura para sincronizar con la nube sin romper la página
-function sincronizarConNubeSegura() {
-  try {
-    if (typeof firebase !== 'undefined' && firebase.firestore) {
-      const db = firebase.firestore();
-      evaluaciones.forEach((ev) => {
-        db.collection("evaluaciones").doc(ev.id).set(ev, { merge: true })
-          .catch((error) => {
-            console.log("Aviso de sincronización offline:", error);
-          });
-      });
-    }
-  } catch (e) {
-    console.log("Firestore no está inicializado todavía, usando modo local.");
-  }
-}
-
-// Registrar el token del dispositivo en Firestore para las notificaciones en la nube
-if (typeof messaging !== 'undefined' && typeof db !== 'undefined') {
-  messaging.getToken({ vapidKey: 'BK-dzHKqZUPt0Mgc1eyqzhrbF6ib78_gfLTvDGGz6QjYwVgtAV7qXUFcfaFKN-yyNDfNklvja7TOP5VeHbZz_rs' })
-    .then((currentToken) => {
-      if (currentToken) {
-        // Guardar o actualizar el token en la colección "tokens" de Firestore
-        db.collection("tokens").doc(currentToken).set({
-          token: currentToken,
-          dispositivo: "Tecno Spark 10C",
-          actualizado: new Date()
-        })
-        .then(() => {
-          console.log("¡Token del dispositivo registrado en la nube con éxito!");
-        })
-        .catch((error) => {
-          console.error("Error al guardar el token en Firestore:", error);
-        });
-      } else {
-        console.log("No se encontró un token de registro disponible.");
-      }
-    })
-    .catch((err) => {
-      console.log("Error al obtener el token de mensajería: ", err);
-    });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
+  // --- CALENDARIO VISUAL ESTILO ANDROID (Marcado en Fucsia) ---
   let fechaActual = new Date();
   let mesActual = fechaActual.getMonth();
   let anioActual = fechaActual.getFullYear();
@@ -249,94 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
   ];
 
-  function renderizarCalendario() {
-    const contenedorDias = document.getElementById("calendar-days");
-    const textoMesAnio = document.getElementById("calendar-month-year");
-    if (!contenedorDias || !textoMesAnio) return;
-
-    contenedorDias.innerHTML = "";
-    textoMesAnio.textContent = `${meses[mesActual]} ${anioActual}`;
-
-    // Primer día del mes y total de días
-    const primerDiaIndex = new Date(anioActual, mesActual, 1).getDay();
-    const totalDias = new Date(anioActual, mesActual + 1, 0).getDate();
-
-    // Espacios vacíos previos al primer día de la semana
-    for (let i = 0; i < primerDiaIndex; i++) {
-      const divVacio = document.createElement("div");
-      divVacio.style.background = "transparent";
-      divVacio.style.cursor = "default";
-      contenedorDias.appendChild(divVacio);
-    }
-
-    // Dibujar los días del mes
-    for (let dia = 1; dia <= totalDias; dia++) {
-      const divDia = document.createElement("div");
-      divDia.textContent = dia;
-      
-      // Opcional: Resaltar el día actual
-      const hoy = new Date();
-      if (dia === hoy.getDate() && mesActual === hoy.getMonth() && anioActual === hoy.getFullYear()) {
-        divDia.style.border = "2px solid #00d2ff";
-      }
-
-      contenedorDias.appendChild(divDia);
-    }
-  }
-
-  // Botones para cambiar de mes
-  const btnPrev = document.getElementById("prev-month");
-  const btnNext = document.getElementById("next-month");
-
-  if (btnPrev && btnNext) {
-    btnPrev.addEventListener("click", () => {
-      mesActual--;
-      if (mesActual < 0) {
-        mesActual = 11;
-        anioActual--;
-      }
-      renderizarCalendario();
-    });
-
-    btnNext.addEventListener("click", () => {
-      mesActual++;
-      if (mesActual > 11) {
-        mesActual = 0;
-        anioActual++;
-      }
-      renderizarCalendario();
-    });
-  }
-
-  // Inicializar calendario al cargar
-  renderizarCalendario();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  let fechaActual = new Date();
-  let mesActual = fechaActual.getMonth();
-  let anioActual = fechaActual.getFullYear();
-  let fechasEvaluaciones = [];
-
-  const meses = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-  ];
-
-  // Inicializar Firestore (asumiendo que 'db' ya está disponible o lo inicializas aquí)
-  const db = firebase.firestore();
-
-  // Escuchar las evaluaciones en tiempo real desde Firestore
-  db.collection("evaluaciones").onSnapshot((snapshot) => {
-    fechasEvaluaciones = [];
-    snapshot.forEach((doc) => {
-      const data = doc.data();
-      if (data.fecha) {
-        fechasEvaluaciones.push(data.fecha); 
-      }
-    });
-    renderizarCalendario();
-  });
+  const fechasEvaluaciones = evaluaciones.map(e => e.fecha);
 
   function renderizarCalendario() {
     const contenedorDias = document.getElementById("calendar-days");
@@ -349,7 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const primerDiaIndex = new Date(anioActual, mesActual, 1).getDay();
     const totalDias = new Date(anioActual, mesActual + 1, 0).getDate();
 
-    // Espacios vacíos para alinear el primer día de la semana
     for (let i = 0; i < primerDiaIndex; i++) {
       const divVacio = document.createElement("div");
       divVacio.style.background = "transparent";
@@ -357,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
       contenedorDias.appendChild(divVacio);
     }
 
-    // Dibujar los días del mes
     for (let dia = 1; dia <= totalDias; dia++) {
       const divDia = document.createElement("div");
       divDia.textContent = dia;
@@ -366,14 +233,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const diaFormateado = String(dia).padStart(2, '0');
       const fechaClave = `${anioActual}-${mesFormateado}-${diaFormateado}`;
 
-      // Si la fecha coincide con una evaluación, se pinta de fucsia
       if (fechasEvaluaciones.includes(fechaClave)) {
           divDia.classList.add("tiene-evaluacion");
       }
 
-      // Resaltar el día actual con un borde azul
-      const hoy = new Date();
-      if (dia === hoy.getDate() && mesActual === hoy.getMonth() && anioActual === hoy.getFullYear()) {
+      const hoyFecha = new Date();
+      if (dia === hoyFecha.getDate() && mesActual === hoyFecha.getMonth() && anioActual === hoyFecha.getFullYear()) {
         divDia.style.border = "2px solid #00d2ff";
       }
 
@@ -381,7 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Botones para cambiar de mes
   const btnPrev = document.getElementById("prev-month");
   const btnNext = document.getElementById("next-month");
 
@@ -405,6 +269,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Inicializar calendario al cargar
   renderizarCalendario();
 });
