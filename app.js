@@ -70,19 +70,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // --- 2. CUENTA REGRESIVA FIN DE AÑO (Ej. 31 de Julio de 2027) ---
-  const fechaFinCurso = new Date("2027-12-05T00:00:00").getTime();
+   // --- 2. CUENTA REGRESIVA FIN DE AÑO (Ajusta la fecha aquí) ---
+  const fechaFinCurso = new Date("2026-12-05T23:59:59").getTime();
+  
   function actualizarContador() {
     const ahora = new Date().getTime();
     const distancia = fechaFinCurso - ahora;
 
+    const contadorDiv = document.getElementById("countdown-timer");
+
     if (distancia > 0) {
-      document.getElementById("days").textContent = String(Math.floor(distancia / (1000 * 60 * 60 * 24))).padStart(2, '0');
-      document.getElementById("hours").textContent = String(Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-      document.getElementById("minutes").textContent = String(Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-      document.getElementById("seconds").textContent = String(Math.floor((distancia % (1000 * 60)) / 1000)).padStart(2, '0');
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+      document.getElementById("days").textContent = String(dias).padStart(2, '0');
+      document.getElementById("hours").textContent = String(horas).padStart(2, '0');
+      document.getElementById("minutes").textContent = String(minutos).padStart(2, '0');
+      document.getElementById("seconds").textContent = String(segundos).padStart(2, '0');
+    } else {
+      // --- SORPRESA ÉPICA CUANDO LLEGUE A CERO (Ideas 3 y 4 combinadas) ---
+      contadorDiv.innerHTML = `
+        <div style="grid-column: span 4; background: linear-gradient(135deg, #06b6d4, #d946ef); padding: 20px; border-radius: 12px; color: white; text-align: center; box-shadow: 0 0 20px rgba(217, 70, 239, 0.5);">
+          <h3 style="font-size: 1.4rem; margin-bottom: 8px;">🎓 ¡MISIÓN CUMPLIDA! 🎓</h3>
+          <p style="font-size: 0.9rem; margin-bottom: 12px; line-height: 1.4;">
+            ¡Al fin libres de tareas, carpetas y profes! Sobrevivimos a las desveladas y exámenes de 5to año. ¡A dormir por fin!
+          </p>
+          <button id="btn-certificado" class="secondary-btn" style="background: #ffffff; color: #0f111a; font-weight: bold;">
+            Ver Certificado de Supervivencia 📜
+          </button>
+        </div>
+      `;
+
+      // Evento del botón sorpresa al terminar
+      const btnCertificado = document.getElementById("btn-certificado");
+      if (btnCertificado) {
+        btnCertificado.addEventListener("click", () => {
+          alert("📜 CERTIFICADO OFICIAL: Se certifica que este estudiante aguantó todo el 5to año con éxito absoluto. ¡Disfruta tus merecidas vacaciones!");
+        });
+      }
     }
   }
+  
   setInterval(actualizarContador, 1000);
   actualizarContador();
 
