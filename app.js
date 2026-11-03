@@ -1,6 +1,6 @@
 const evaluaciones = [
   {
-    id: "mat_1",
+    id: "01",
     fecha: "2026-11-03",
     materia: "Castellano",
     tipo: "Exposicion",
@@ -8,7 +8,7 @@ const evaluaciones = [
     criterio: "Lámina nada más.",
   },
   {
-    id: "fis_1",
+    id: "02",
     fecha: "2026-11-04",
     materia: "Orientacion",
     tipo: "Exposición",
@@ -16,7 +16,7 @@ const evaluaciones = [
     criterio: "Lámina con IA.",
   },
   {
-    id: "his_1",
+    id: "03",
     fecha: "2026-11-03",
     materia: "CRP",
     tipo: "Formato Cajetin",
@@ -24,13 +24,21 @@ const evaluaciones = [
     criterio: "Los círculos a cuaderno cerrado, en el cual son todos los círculos vistos en clase.",
   },
   {
-    id: "his_2",
+    id: "04",
     fecha: "2026-11-05",
     materia: "CS de la Tierra",
     tipo: "Mapa Mental",
     descripcion: "Placas Tectónicas",
     criterio: "Mapa mental en clase sobre todo lo visto referente al tema.",
   },
+  {
+    id: "04",
+    fecha: "2026-11-04",
+    materia: "GHC",
+    tipo: "Esquema",
+    descripcion: "Hidrocarburos",
+    criterio: "Se debe traer un mapa de venezuela, en el cual se va a realizar un esquema en clase."
+  }
 ];
 
 function obtenerFechaLocal() {
