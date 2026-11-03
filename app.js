@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 2. FRASES SARCÁSTICAS ESTUDIANTILES ---
   const frases = [
     "“Deja para mañana lo que puedas hacer hoy. att:Vitico”",
-    "“Si el director dice que eres el futuro del paid, procupate por el pais. att:Leandro”",
+    "“Si el director dice que eres el futuro del pais, procupate por el pais. att:Leandro”",
     "“Agrega una tu.”",
   ];
   const quoteText = document.getElementById("quote-text");
@@ -94,8 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     quoteText.textContent = aleatoria;
   });
 
-  // --- 3. BLOC DE NOTAS RÁPIDAS ---
-  // --- BLOC DE NOTAS RÁPIDAS ---
+   // --- 3. BLOC DE NOTAS RÁPIDAS ---
   const notesArea = document.getElementById("quick-notes");
   const notesContainer = document.getElementById("notes-container");
   const noteErrorMsg = document.getElementById("note-error-msg");
@@ -127,18 +126,16 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("save-notes-btn").addEventListener("click", () => {
     const texto = notesArea.value.trim();
     if (texto === "") {
-      // Mostrar advertencia integrada con estilo de la app
       noteErrorMsg.textContent = "⚠️ ¿Escribir invisible es parte de la nueva modalidad? Ponle algo a la nota primero.";
-      noteErrorMsg.style.display = "block";
+      noteErrorMsg.classList.add("visible");
       
-      // Ocultar el mensaje automáticamente después de 3 segundos
       setTimeout(() => {
-        noteErrorMsg.style.display = "none";
-      }, 3000);
+        noteErrorMsg.classList.remove("visible");
+      }, 6000);
       return;
     }
 
-    noteErrorMsg.style.display = "none";
+    noteErrorMsg.classList.remove("visible");
     const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
     notasGuardadas.push(texto);
     localStorage.setItem("mis_notas_tarjetas", JSON.stringify(notasGuardadas));
