@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Central de Comandos Estudiantil</title>
+    <title>Liceo 5to Año</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f111a">
 </head>
 <body>
 
     <header>
-        <div class="logo">Liceo Control</div>
+        <div class="logo">5to AÑO</div>
         <nav>
             <ul class="nav-links">
                 <li><a href="#evaluaciones">Evaluaciones</a></li>
@@ -47,24 +48,45 @@
             <div class="timeline-container" id="timeline"></div>
         </section>
 
-        <!-- BLOQUE DE FRASES MOTIVACIONALES -->
+        <!-- BLOQUE DE FRASES MOTIVACIONALES (Sarcásticas) -->
         <section class="section-container quote-section">
             <h2>💡 Motivación Diaria</h2>
-            <p id="quote-text" class="quote-text">"Tu puedes."</p>
+            <p id="quote-text" class="quote-text">"Hola."</p>
             <button id="new-quote-btn" class="secondary-btn">Otra Frase</button>
         </section>
 
-        <!-- BLOC DE NOTAS RÁPIDAS (CREA TARJETAS NUEVAS) -->
+        <!-- MINI ACORDEÓN DE FÓRMULAS / NOTAS CLAVE -->
+        <section class="section-container accordion-section">
+            <h2>🎴 Emergencia Examen (Acordeón Clave)</h2>
+            <p style="font-size: 0.85rem; color: #a0aec0; margin-bottom: 10px;">Toca cualquier tema para desplegar el resumen rápido:</p>
+            <div class="accordion-container">
+                <details class="accordion-item">
+                    <summary>Fórmulas de Física / Matemáticas</summary>
+                    <p>• Velocidad = Distancia / Tiempo<br>• Aceleración = ΔV / Δt<br>• Teorema de Pitágoras: $a^2 + b^2 = c^2$</p>
+                </details>
+                <details class="accordion-item">
+                    <summary>Datos Clave de Química</summary>
+                    <p>• Enlaces iónicos: Metal + No metal.<br>• Enlaces covalentes: No metal + No metal.<br>• El agua ($H_2O$) siempre salva vidas en el laboratorio.</p>
+                </details>
+                <details class="accordion-item">
+                    <summary>Tips para Exposiciones</summary>
+                    <p>• No leas toda la lámina de golpe.<br>• Si te trabas, inventa con seguridad; nadie se da cuenta.<br>• Pon una diapositiva bonita y ya tienes medio punto ganado.</p>
+                </details>
+            </div>
+        </section>
+
+ <!-- BLOC DE NOTAS RÁPIDAS -->
         <section class="section-container notes-section">
             <h2>📝 Notas Rápidas / Recordatorios</h2>
             <textarea id="quick-notes" placeholder="Apunta algo rápido aquí (ej. llevar cartulina mañana)..."></textarea>
             <button id="save-notes-btn" class="secondary-btn">Agregar Nota</button>
+            <!-- Mensaje de error personalizado estilo la app -->
+            <div id="note-error-msg" style="display: none; margin-top: 10px; padding: 10px; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; border-radius: 8px; color: #fca5a5; font-size: 0.85rem;"></div>
             
-            <!-- Contenedor donde aparecerán las tarjetas de notas guardadas -->
             <div id="notes-container" class="notes-cards-container" style="margin-top: 15px;"></div>
         </section>
 
-        <!-- SECCIÓN 2: CALENDARIO VISUAL ESTILO ANDROID -->
+        <!-- CALENDARIO VISUAL -->
         <section id="calendario" class="section-container">
             <h2>Calendario Escolar</h2>
             <div class="calendar-card">
@@ -80,8 +102,7 @@
             </div>
         </section>
 
-
-        <!-- SECCIÓN 3: HORARIO DE CLASES (5to año) -->
+<!-- SECCIÓN 3: HORARIO DE CLASES (5to año) -->
         <section id="horario" class="section-container">
             <h2>Horario Semanal (5to año)</h2>
             <div class="horario-grid">
@@ -126,4 +147,3 @@
     <script src="app.js"></script>
 </body>
 </html>
-

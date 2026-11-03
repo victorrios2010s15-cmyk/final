@@ -33,15 +33,6 @@ const evaluaciones = [
   },
 ];
 
-// Registro del Service Worker
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("firebase-messaging-sw.js").then((reg) => {
-    if (Notification.permission === "default") {
-      Notification.requestPermission();
-    }
-  }).catch((err) => console.log("SW error:", err));
-}
-
 function obtenerFechaLocal() {
   const hoy = new Date();
   const offset = hoy.getTimezoneOffset();
@@ -49,8 +40,8 @@ function obtenerFechaLocal() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 1. CUENTA REGRESIVA FIN DE AÑO (Con sorpresa interactiva) ---
-  const fechaFinCurso = new Date("2026-12-05T23:59:59").getTime(); // Cambia aquí tu fecha real
+  // --- 1. CUENTA REGRESIVA FIN DE AÑO ---
+  const fechaFinCurso = new Date("2026-12-05T23:59:59").getTime();
   
   function actualizarContador() {
     const ahora = new Date().getTime();
@@ -79,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
           </button>
         </div>
       `;
-
       const btnCertificado = document.getElementById("btn-certificado");
       if (btnCertificado) {
         btnCertificado.addEventListener("click", () => {
@@ -92,13 +82,11 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(actualizarContador, 1000);
   actualizarContador();
 
-  // --- 2. FRASES MOTIVACIONALES ---
+  // --- 2. FRASES SARCÁSTICAS ESTUDIANTILES ---
   const frases = [
-    "“Deja para mañana lo que puedes hacer hoy.”",
-    "“La inteligencias te persigue, pero eres mas rapido.”",
-    "“Tranquilo, no hagas nada.”",
-    "“Camaron que se duerme se lo lleva la corriente.”",
-    "“El que estudia duda de sus conocimientos.”"
+    "“Deja para mañana lo que puedas hacer hoy. att:Vitico”",
+    "“Si el director dice que eres el futuro del paid, procupate por el pais. att:Leandro”",
+    "“Agrega una tu.”",
   ];
   const quoteText = document.getElementById("quote-text");
   document.getElementById("new-quote-btn").addEventListener("click", () => {
@@ -106,9 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
     quoteText.textContent = aleatoria;
   });
 
-  // --- 3. BLOC DE NOTAS RÁPIDAS (CREANDO TARJETAS NUEVAS) ---
+  // --- 3. BLOC DE NOTAS RÁPIDAS ---
+  // --- BLOC DE NOTAS RÁPIDAS ---
   const notesArea = document.getElementById("quick-notes");
   const notesContainer = document.getElementById("notes-container");
+  const noteErrorMsg = document.getElementById("note-error-msg");
 
   function cargarNotasGuardadas() {
     const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
@@ -124,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
       notesContainer.appendChild(tarjetaNota);
     });
 
-    // Agregar evento a los botones de borrar
     document.querySelectorAll(".delete-note-btn").forEach(btn => {
       btn.addEventListener("click", (e) => {
         const idx = e.target.getAttribute("data-index");
@@ -138,21 +127,43 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("save-notes-btn").addEventListener("click", () => {
     const texto = notesArea.value.trim();
     if (texto === "") {
-      alert("Escribe algo antes de agregar la nota.");
+      // Mostrar advertencia integrada con estilo de la app
+      noteErrorMsg.textContent = "⚠️ ¿Escribir invisible es parte de la nueva modalidad? Ponle algo a la nota primero.";
+      noteErrorMsg.style.display = "block";
+      
+      // Ocultar el mensaje automáticamente después de 3 segundos
+      setTimeout(() => {
+        noteErrorMsg.style.display = "none";
+      }, 3000);
       return;
     }
 
+    noteErrorMsg.style.display = "none";
     const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
     notasGuardadas.push(texto);
     localStorage.setItem("mis_notas_tarjetas", JSON.stringify(notasGuardadas));
-
-    notesArea.value = ""; // Limpiar el cuadro de texto
+    notesArea.value = "";
     cargarNotasGuardadas();
   });
 
-  cargarNotasGuardadas(); // Cargar al abrir la app
+  cargarNotasGuardadas();
 
-  // --- PANEL DE EVALUACIONES Y NOTIFICACIONES ---
+  document.getElementById("save-notes-btn").addEventListener("click", () => {
+    const texto = notesArea.value.trim();
+    if (texto === "") {
+      alert("Escribe algo antes de agregar la nota.");
+      return;
+    }
+    const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
+    notasGuardadas.push(texto);
+    localStorage.setItem("mis_notas_tarjetas", JSON.stringify(notasGuardadas));
+    notesArea.value = "";
+    cargarNotasGuardadas();
+  });
+
+  cargarNotasGuardadas();
+
+  // --- EVALUACIONES Y CRONOGRAMA ---
   const container = document.getElementById("timeline");
   const alertBanner = document.getElementById("global-alert");
   const alertText = document.getElementById("global-alert-text");
@@ -176,22 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
       evaluacionesUrgentes.push(
         `${ev.materia} (${diasRestantes === 0 ? "Hoy" : diasRestantes === 1 ? "Mañana" : "En 2 días"})`
       );
-
-      if (diasRestantes === 2 || diasRestantes === 1) {
-        const claveNotif = `notificado_${diasRestantes}dias_${ev.id}_${ev.fecha}`;
-        const yaNotificado = localStorage.getItem(claveNotif);
-
-        if (!yaNotificado && "serviceWorker" in navigator && Notification.permission === "granted") {
-          navigator.serviceWorker.ready.then((registration) => {
-            const textoTiempo = diasRestantes === 1 ? "¡Es MAÑANA!" : "en 2 días";
-            registration.showNotification(`⚠️ Evaluación ${textoTiempo}: ${ev.materia}`, {
-              body: `${ev.tipo}: ${ev.descripcion}. Criterio: ${ev.criterio}`,
-              icon: "/favicon.ico"
-            });
-            localStorage.setItem(claveNotif, "true");
-          });
-        }
-      }
     }
 
     const partesFecha = ev.fecha.split("-");
@@ -238,16 +233,11 @@ document.addEventListener("DOMContentLoaded", () => {
     alertBanner.style.display = "none";
   }
 
-  // --- CALENDARIO VISUAL ---
+  // --- CALENDARIO ---
   let fechaActual = new Date();
   let mesActual = fechaActual.getMonth();
   let anioActual = fechaActual.getFullYear();
-
-  const meses = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-  ];
-
+  const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
   const fechasEvaluaciones = evaluaciones.map(e => e.fecha);
 
   function renderizarCalendario() {
@@ -295,23 +285,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnPrev && btnNext) {
     btnPrev.addEventListener("click", () => {
       mesActual--;
-      if (mesActual < 0) {
-        mesActual = 11;
-        anioActual--;
-      }
+      if (mesActual < 0) { mesActual = 11; anioActual--; }
       renderizarCalendario();
     });
-
     btnNext.addEventListener("click", () => {
       mesActual++;
-      if (mesActual > 11) {
-        mesActual = 0;
-        anioActual++;
-      }
+      if (mesActual > 11) { mesActual = 0; anioActual++; }
       renderizarCalendario();
     });
   }
 
   renderizarCalendario();
 });
-

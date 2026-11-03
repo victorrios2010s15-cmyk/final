@@ -643,6 +643,43 @@ body {
     color: #06b6d4;
 }
 
+/* --- ESTILOS DEL ACORDEÓN DE ESTUDIO --- */
+.accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.accordion-item {
+    background: rgba(6, 182, 212, 0.05);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #ffffff;
+    transition: background 0.2s;
+}
+
+.accordion-item[open] {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: #06b6d4;
+}
+
+.accordion-item summary {
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #06b6d4;
+    outline: none;
+}
+
+.accordion-item p {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    line-height: 1.4;
+}
+
 @media (max-width: 768px) {
     header {
         padding: 0 15px;

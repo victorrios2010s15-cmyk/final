@@ -1,21 +1,21 @@
 {
-  "short_name": "LiceoControl",
-  "name": "Central de Comandos Estudiantil",
+  "short_name": "5to Año",
+  "name": "Liceo 5to Año",
   "icons": [
     {
-      "src": "icon-192.png",
-      "type": "image/png",
+      "src": "icon-192.jpeg",
+      "type": "image/jpeg",
       "sizes": "192x192"
     },
     {
-      "src": "icon-512.png",
-      "type": "image/png",
+      "src": "icon-512.jpeg",
+      "type": "image/jpeg",
       "sizes": "512x512"
     }
   ],
   "start_url": "index.html",
   "background_color": "#0f111a",
-  "theme_color": "#06b6d4",
+  "theme_color": "#0f111a",
   "display": "standalone",
   "orientation": "portrait"
 }
