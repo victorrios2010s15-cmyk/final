@@ -94,10 +94,33 @@ document.addEventListener("DOMContentLoaded", () => {
     quoteText.textContent = aleatoria;
   });
 
-   // --- 3. BLOC DE NOTAS RÁPIDAS ---
+// --- 3. BLOC DE NOTAS RÁPIDAS Y MODAL ---
   const notesArea = document.getElementById("quick-notes");
   const notesContainer = document.getElementById("notes-container");
-  const noteErrorMsg = document.getElementById("note-error-msg");
+  const modalOverlay = document.getElementById("custom-modal-overlay");
+  const modalCloseBtn = document.getElementById("modal-close-btn");
+
+  function mostrarModalAlerta() {
+    if (modalOverlay) {
+      modalOverlay.classList.add("active");
+    }
+  }
+
+  function ocultarModalAlerta() {
+    if (modalOverlay) {
+      modalOverlay.classList.remove("active");
+    }
+  }
+
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", ocultarModalAlerta);
+  }
+
+  if (modalOverlay) {
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) ocultarModalAlerta();
+    });
+  }
 
   function cargarNotasGuardadas() {
     const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
@@ -123,40 +146,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  document.getElementById("save-notes-btn").addEventListener("click", () => {
-    const texto = notesArea.value.trim();
-    if (texto === "") {
-      noteErrorMsg.textContent = "⚠️ ¿Escribir invisible es parte de la nueva modalidad? Ponle algo a la nota primero.";
-      noteErrorMsg.classList.add("visible");
-      
-      setTimeout(() => {
-        noteErrorMsg.classList.remove("visible");
-      }, 6000);
-      return;
-    }
+  const saveNotesBtn = document.getElementById("save-notes-btn");
+  if (saveNotesBtn) {
+    saveNotesBtn.addEventListener("click", () => {
+      const texto = notesArea.value.trim();
+      if (texto === "") {
+        mostrarModalAlerta();
+        return;
+      }
 
-    noteErrorMsg.classList.remove("visible");
-    const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
-    notasGuardadas.push(texto);
-    localStorage.setItem("mis_notas_tarjetas", JSON.stringify(notasGuardadas));
-    notesArea.value = "";
-    cargarNotasGuardadas();
-  });
-
-  cargarNotasGuardadas();
-
-  document.getElementById("save-notes-btn").addEventListener("click", () => {
-    const texto = notesArea.value.trim();
-    if (texto === "") {
-      alert("Escribe algo antes de agregar la nota.");
-      return;
-    }
-    const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
-    notasGuardadas.push(texto);
-    localStorage.setItem("mis_notas_tarjetas", JSON.stringify(notasGuardadas));
-    notesArea.value = "";
-    cargarNotasGuardadas();
-  });
+      const notasGuardadas = JSON.parse(localStorage.getItem("mis_notas_tarjetas")) || [];
+      notasGuardadas.push(texto);
+      localStorage.setItem("mis_notas_tarjetas", JSON.stringify(notasGuardadas));
+      notesArea.value = "";
+      cargarNotasGuardadas();
+    });
+  }
 
   cargarNotasGuardadas();
 

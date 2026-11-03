@@ -75,19 +75,25 @@
             </div>
         </section>
 
- <!-- BLOC DE NOTAS RÁPIDAS -->
+  <!-- BLOC DE NOTAS RÁPIDAS -->
         <section class="section-container notes-section">
             <h2>📝 Notas Rápidas / Recordatorios</h2>
             <textarea id="quick-notes" placeholder="Apunta algo rápido aquí (ej. llevar cartulina mañana)..."></textarea>
-            
-            <div class="notes-action-row">
-                <button id="save-notes-btn" class="secondary-btn">Agregar Nota</button>
-            </div>
-            
-            <div id="note-error-msg" class="custom-alert-toast"></div>
-            
+            <button id="save-notes-btn" class="secondary-btn">Agregar Nota</button>
             <div id="notes-container" class="notes-cards-container" style="margin-top: 15px;"></div>
         </section>
+
+        <!-- VENTANA EMERGENTE (MODAL) PERSONALIZADA -->
+        <div id="custom-modal-overlay" class="modal-overlay">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <span class="modal-icon">⚠️</span>
+                    <h3>¡Nota Vacía!</h3>
+                </div>
+                <p id="modal-msg-text">¿Escribir en invisible es parte de la nueva modalidad? Escribe algo primero.</p>
+                <button id="modal-close-btn" class="secondary-btn">Entendido</button>
+            </div>
+        </div>
 
         <!-- CALENDARIO VISUAL -->
         <section id="calendario" class="section-container">
