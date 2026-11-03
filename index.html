@@ -79,9 +79,12 @@
         <section class="section-container notes-section">
             <h2>📝 Notas Rápidas / Recordatorios</h2>
             <textarea id="quick-notes" placeholder="Apunta algo rápido aquí (ej. llevar cartulina mañana)..."></textarea>
-            <button id="save-notes-btn" class="secondary-btn">Agregar Nota</button>
-            <!-- Mensaje de error personalizado estilo la app -->
-            <div id="note-error-msg" style="display: none; margin-top: 10px; padding: 10px; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; border-radius: 8px; color: #fca5a5; font-size: 0.85rem;"></div>
+            
+            <div class="notes-action-row">
+                <button id="save-notes-btn" class="secondary-btn">Agregar Nota</button>
+            </div>
+            
+            <div id="note-error-msg" class="custom-alert-toast"></div>
             
             <div id="notes-container" class="notes-cards-container" style="margin-top: 15px;"></div>
         </section>
