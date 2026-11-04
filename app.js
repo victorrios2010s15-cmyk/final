@@ -307,3 +307,78 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderizarCalendario();
 });
+
+  // --- CLIMA REAL + SARCASMO TÉRMICO ---
+  function cargarClimaReal() {
+    const tempDiv = document.getElementById("weather-temp");
+    const descDiv = document.getElementById("weather-desc");
+    const iconDiv = document.getElementById("weather-icon");
+    const sarcasmDiv = document.getElementById("weather-sarcasm");
+
+    if (!navigator.geolocation) {
+      tempDiv.textContent = "Geolocalización no disponible";
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        try {
+          // Consultamos el clima actual mediante Open-Meteo (Gratis y sin clave de API)
+          const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+          const data = await response.json();
+          const temp = data.current_weather.temperature;
+          const code = data.current_weather.weathercode;
+
+          tempDiv.textContent = `${temp}°C`;
+
+          // Interpretar códigos de clima y darles humor sarcástico estudiantil
+          let descripcion = "Clima estable";
+          let icono = "🌡️";
+          let mensajeSarcasmo = "";
+
+          if (code === 0) {
+            icono = "☀️";
+            descripcion = "Cielo despejado / Sol intenso";
+            if (temp > 30) {
+              mensajeSarcasmo = `“A ${temp}°C, sol sueltame el brazo.”`;
+            } else {
+              mensajeSarcasmo = `“Que chevere.”`;
+            }
+          } else if (code >= 1 && code <= 3) {
+            icono = "⛅";
+            descripcion = "Parcialmente nublado";
+            mensajeSarcasmo = `“Nublado y a ${temp}°C. No ir, dormir.”`;
+          } else if (code >= 51 && code <= 67) {
+            icono = "🌧️";
+            descripcion = "Llovizna o lluvia ligera";
+            mensajeSarcasmo = `“Lloviendo y a ${temp}°C. Ojalas todo el dia”`;
+          } else if (code >= 95) {
+            icono = "🌩️";
+            descripcion = "Tormenta eléctrica";
+            mensajeSarcasmo = `“Tormenta eléctrica a ${temp}°C. Ta cayendo el palo de agua.”`;
+          } else {
+            icono = "🌥️";
+            descripcion = "Clima variable";
+            mensajeSarcasmo = `“A ${temp}°C Que ladilla.”`;
+          }
+
+          iconDiv.textContent = icono;
+          descDiv.textContent = descripcion;
+          sarcasmDiv.textContent = mensajeSarcasmo;
+
+        } catch (error) {
+          tempDiv.textContent = "Error al cargar el clima";
+          sarcasmDiv.textContent = "“El clima falló, al igual que nuestro intento de estudiar con anticipación.”";
+        }
+      },
+      () => {
+        tempDiv.textContent = "GPS desactivado";
+        sarcasmDiv.textContent = "“Permite la ubicación para saber exactamente qué tan feo está el día afuera.”";
+      }
+    );
+  }
+
+  cargarClimaReal();
