@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const frases = [
     "“Deja para mañana lo que puedas hacer hoy. att:Vitico”",
     "“Si el director dice que eres el futuro del pais, procupate por el pais. att:Leandro”",
-    "“Agrega una tu.”",
+    "“El que estudia duda de sus conocimientos. att:Noel.”",
   ];
   const quoteText = document.getElementById("quote-text");
   document.getElementById("new-quote-btn").addEventListener("click", () => {
