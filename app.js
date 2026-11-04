@@ -1,29 +1,5 @@
 const evaluaciones = [
   {
-    id: "01",
-    fecha: "2026-11-03",
-    materia: "Castellano",
-    tipo: "Exposicion",
-    descripcion: "Exposición, grupo de la tesis sobre el Cap 1.",
-    criterio: "Lámina nada más.",
-  },
-  {
-    id: "02",
-    fecha: "2026-11-04",
-    materia: "Orientacion",
-    tipo: "Exposición",
-    descripcion: "Exposición sobre los métodos anticonceptivos.",
-    criterio: "Lámina con IA.",
-  },
-  {
-    id: "03",
-    fecha: "2026-11-03",
-    materia: "CRP",
-    tipo: "Formato Cajetin",
-    descripcion: "Círculos",
-    criterio: "Los círculos a cuaderno cerrado, en el cual son todos los círculos vistos en clase.",
-  },
-  {
     id: "04",
     fecha: "2026-11-05",
     materia: "CS de la Tierra",
@@ -31,14 +7,6 @@ const evaluaciones = [
     descripcion: "Placas Tectónicas",
     criterio: "Mapa mental en clase sobre todo lo visto referente al tema.",
   },
-  {
-    id: "04",
-    fecha: "2026-11-04",
-    materia: "GHC",
-    tipo: "Esquema",
-    descripcion: "Hidrocarburos",
-    criterio: "Se debe traer un mapa de venezuela, en el cual se va a realizar un esquema en clase."
-  }
 ];
 
 function obtenerFechaLocal() {
