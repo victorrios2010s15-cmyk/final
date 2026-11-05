@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS # <--- 1. Importas la librería
 from datetime import datetime
 
 app = Flask(__name__)
+CORS(app) # <--- 2. Activas CORS para toda la app
 
-# Lista de evaluaciones de prueba (aquí irán las tuyas semanales)
 evaluaciones = [
     {
         "id": "01",
@@ -30,6 +31,7 @@ evaluaciones = [
         "criterio": "Mapa mental en clase sobre todo lo visto referente al tema."
     }
 ]
+
 @app.route('/api/evaluaciones', methods=['GET'])
 def obtener_evaluaciones():
     hoy = datetime.now()
@@ -38,11 +40,8 @@ def obtener_evaluaciones():
     for item in evaluaciones:
         fecha_eval = datetime.strptime(item["fecha"], "%Y-%m-%d")
         dias_restantes = (fecha_eval - hoy).days
-        
-        # Lógica de los 2 días o menos
         alerta_activa = True if 0 <= dias_restantes <= 2 else False
         
-        # Creamos un objeto con la info ampliada
         evaluacion_procesada = {
             "materia": item["materia"],
             "tipo": item["tipo"],
