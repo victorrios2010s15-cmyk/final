@@ -3,10 +3,12 @@ const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './tesis.html',
-  './styles.css',
-  './styles.css',
+  './style.css',
+  './tesis.css',
   './app.js',
-  './tesis.js'
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
 ];
 
 // Instalación y precaché de recursos estáticos
