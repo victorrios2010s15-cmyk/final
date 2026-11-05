@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Tesis & Biología — 5to Año</title>
+  <link rel="stylesheet" href="./tesis.css?v=1.0">
+</head>
+<body class="dark-theme">
+
+<main class="container">
+  <a href="index.html" class="btn-volver">⬅ Volver</a>
+
+  <h1>Proyecto de Investigación & Biología</h1>
+  <p class="subtitle">Búnker teórico y control de avance socio-comunitario</p>
+
+<!-- 1. BARRAS DE PROGRESO (GENERAL Y POR CAPÍTULO) -->
+  <section class="card">
+    <h2>📊 Control de Avance de la Tesis</h2>
+
+    <!-- Barra 1: Avance General de la Tesis -->
+    <p style="margin-bottom: 5px; font-size: 0.9em;"><strong>Avance General del Proyecto:</strong></p>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBarGeneral" style="width: 15%;"></div>
+    </div>
+    <p class="progress-text" style="margin-bottom: 20px;">Total completado: <strong id="progressTextGeneral">15%</strong></p>
+
+    <!-- Barra 2: Avance del Capítulo Actual -->
+    <p style="margin-bottom: 5px; font-size: 0.9em;"><strong>Capítulo Actual (Capítulo 1: Diagnóstico Comunitario):</strong></p>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBarCapitulo" style="width: 40%; background: linear-gradient(90deg, #00f2fe, #4facfe);"></div>
+    </div>
+    <p class="progress-text" style="margin-bottom: 20px;">Progreso del capítulo: <strong id="progressTextCapitulo">40%</strong></p>
+
+    <!-- Listado de Capítulos (Checklist de Estado) -->
+    <hr style="border-color: var(--border-color); margin: 15px 0;">
+    <h3 style="font-size: 1.1em; color: var(--accent-neon); margin-bottom: 10px;">📋 Estado de los Capítulos</h3>
+    <ul style="list-style: none; padding: 0; font-size: 0.9em;">
+      <li style="padding: 6px 0; border-bottom: 1px solid var(--border-color);">✅ <strong>Capítulo 1:</strong> Diagnóstico Comunitario (En proceso)</li>
+      <li style="padding: 6px 0; border-bottom: 1px solid var(--border-color); color: #8b949e;">❌ <strong>Capítulo 2:</strong> El Problema (Pendiente)</li>
+      <li style="padding: 6px 0; border-bottom: 1px solid var(--border-color); color: #8b949e;">❌ <strong>Capítulo 3:</strong> Marco Teórico (Pendiente)</li>
+      <li style="padding: 6px 0; border-bottom: 1px solid var(--border-color); color: #8b949e;">❌ <strong>Capítulo 4:</strong> Marco Metodológico (Pendiente)</li>
+      <li style="padding: 6px 0; border-bottom: 1px solid var(--border-color); color: #8b949e;">❌ <strong>Capítulo 5:</strong> Ejecución de la Propuesta / Talleres (Pendiente)</li>
+      <li style="padding: 6px 0; color: #8b949e;">❌ <strong>Capítulo 6:</strong> Conclusiones y Recomendaciones (Pendiente)</li>
+    </ul>
+  </section>
+
+   <!-- 2. CUADERNO TEÓRICO (APUNTES) -->
+  <section class="card">
+    <h2>📖 Cuaderno Teórico y Metodológico</h2>
+    <p class="subtitle" style="text-align: left; margin-bottom: 1rem;">Guía estructurada por capítulos de la investigación.</p>
+    
+    <div class="accordion">
+
+      <!-- CAPÍTULO 1 -->
+      <details style="background: #1c2128; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 15px; padding: 10px 15px;">
+        <summary style="font-size: 1.1em; color: var(--accent-neon); font-weight: bold; cursor: pointer;">📂 Capítulo 1: Diagnóstico Comunitario</summary>
+        
+        <!-- Sub-acordeones del Capítulo 1 -->
+        <div class="accordion" style="margin-top: 10px; padding-left: 10px;">
+          
+          <details>
+            <summary>1. Estructura del Capítulo 1 (Diagnóstico Comunitario)</summary>
+            <p><strong>Objetivo:</strong> Contextualizar la comunidad, identificar necesidades y fundamentar la intervención.</p>
+            <ul>
+              <li><strong>Contextualización:</strong> Ámbito geográfico, histórico y demográfico.</li>
+              <li><strong>Reseña Histórica:</strong> Origen y momentos clave de desarrollo.</li>
+              <li><strong>Infraestructura y Servicios:</strong> Agua, luz, aseo urbano, transporte e internet. Equipamientos públicos (escuelas, centros de salud, canchas).</li>
+              <li><strong>Organizaciones Comunitarias:</strong> Consejos comunales, comités y ONG activas.</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>2. Reglas de Oro para Redactar el Título</summary>
+            <p><strong>Fórmula General:</strong><br>
+            <code>Acción principal + Sujeto/Variable + Delimitación espacial + Delimitación temporal</code></p>
+            <ul>
+              <li><strong>Extensión:</strong> Entre 15 y 27 palabras.</li>
+              <li><strong>Lenguaje:</strong> Técnico y descriptivo. Evitar metáforas o títulos poéticos.</li>
+              <li><strong>Verbos:</strong> No iniciar con verbos en infinitivo (ej: "Crear", "Diseñar"). Usar sustantivos derivados: <em>Diseño, Creación, Desarrollo, Ejecución, Implementación</em>.</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>3. Ejes del Guión de Entrevista Diagnóstica</summary>
+            <ul>
+              <li><strong>Eje A (Contexto):</strong> Trayectoria, visión, misión, población beneficiada y personal.</li>
+              <li><strong>Eje B (Biodiagnóstico y Carencias):</strong> Necesidades de acondicionamiento, material didáctico, nudos críticos y desafíos académicos o emocionales.</li>
+              <li><strong>Eje C (Viabilidad):</strong> Normas, horarios y tipos de talleres o dinámicas autorizadas.</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>4. Objetivo General de la Investigación</summary>
+            <p><strong>Formulación:</strong><br>
+            Capacitación en la técnica de jelly tips para el fomento de habilidades técnico-prácticas en las niñas de las edades [...] de la casa hogar La mariposa y el coquito.</p>
+          </details>
+
+          <details>
+            <summary>5. Objetivos Específicos del Proyecto</summary>
+            <ul>
+              <li><strong>Diagnosticar:</strong> Diagnosticar el conocimiento previo y las necesidades de formación en el área de estética y cuidado de manos en las niñas de la casa hogar La mariposa y el coquito.</li>
+              <li><strong>Diseñar:</strong> Diseñar un plan de talleres teórico-prácticos sobre la correcta aplicación y mantenimiento de la técnica de jelly tips.</li>
+              <li><strong>Ejecutar:</strong> Desarrollar las sesiones de capacitación presencial para fomentar las habilidades técnico-prácticas y de emprendimiento en las participantes.</li>
+              <li><strong>Evaluar:</strong> Evaluar el impacto de la capacitación a través de la presentación de los trabajos prácticos realizados por las niñas.</li>
+            </ul>
+          </details>
+
+        </div>
+      </details>
+
+      <!-- CAPÍTULOS FUTUROS (VACÍOS POR AHORA) -->
+      <details style="background: #1c2128; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; padding: 10px 15px; opacity: 0.7;">
+        <summary style="font-size: 1.05em; color: #8b949e; cursor: pointer;">📁 Capítulo 2: El Problema y Marco Teórico</summary>
+        <p style="margin-top: 10px; color: #8b949e; font-style: italic;">Sección pendiente por redactar conforme avance el proyecto.</p>
+      </details>
+
+      <details style="background: #1c2128; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; padding: 10px 15px; opacity: 0.7;">
+        <summary style="font-size: 1.05em; color: #8b949e; cursor: pointer;">📁 Capítulo 3: Marco Metodológico</summary>
+        <p style="margin-top: 10px; color: #8b949e; font-style: italic;">Sección pendiente por redactar.</p>
+      </details>
+
+      <details style="background: #1c2128; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; padding: 10px 15px; opacity: 0.7;">
+        <summary style="font-size: 1.05em; color: #8b949e; cursor: pointer;">📁 Capítulo 4: Ejecución de la Propuesta</summary>
+        <p style="margin-top: 10px; color: #8b949e; font-style: italic;">Sección pendiente por redactar.</p>
+      </details>
+
+      <details style="background: #1c2128; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; padding: 10px 15px; opacity: 0.7;">
+        <summary style="font-size: 1.05em; color: #8b949e; cursor: pointer;">📁 Capítulo 5: Conclusiones y Recomendaciones</summary>
+        <p style="margin-top: 10px; color: #8b949e; font-style: italic;">Sección pendiente por redactar.</p>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- 3. GALERÍA VISUAL Y LÁMINAS -->
+  <section class="card">
+    <h2>🖼️ Galería de Láminas y Biología</h2>
+    <p class="subtitle" style="text-align: left; margin-bottom: 1rem;">Esquemas conceptuales, láminas reales y gráficos generados.</p>
+    
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="img-placeholder">Lámina 1</div>
+        <span>Croquis & Diagnóstico</span>
+      </div>
+      <div class="gallery-item">
+        <div class="img-placeholder">Esquema Biología</div>
+        <span>Interacción Comunitaria</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="app.js?v=1.0"></script>
+<script src="tesis.js?v=1.0"></script>
+</body>
+</html>
