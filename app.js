@@ -1,11 +1,27 @@
 const evaluaciones = [
   {
+    id: "01",
+    fecha: "2026-11-09",
+    materia: "Matematicas",
+    tipo: "Examen",
+    descripcion: "Determinante de 2do Grado",
+    criterio: "Examen sorbe en todo lo visto en clase, formulas abajo.",
+  },
+    {
+    id: "02",
+    fecha: "2026-11-09",
+    materia: "Quimica",
+    tipo: "Taller",
+    descripcion: "El Carbono",
+    criterio: "Taller sobre todo lo que tiene q ver con el carbono.",
+  },
+  {
     id: "04",
-    fecha: "2026-11-05",
+    fecha: "2026-11-12",
     materia: "CS de la Tierra",
     tipo: "Mapa Mental",
     descripcion: "Placas Tectónicas",
-    criterio: "Mapa mental en clase sobre todo lo visto referente al tema.",
+    criterio: "Mapa mental en clase sobre todo lo visto referente al tema. De 3 o 4 personas.",
   },
 ];
 
