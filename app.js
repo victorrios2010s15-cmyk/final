@@ -5,7 +5,7 @@ const evaluaciones = [
     materia: "Matematicas",
     tipo: "Examen",
     descripcion: "Determinante de 2do Grado",
-    criterio: "Examen sorbe en todo lo visto en clase, formulas abajo.",
+    criterio: "Examen sobre en todo lo visto en clase, formulas abajo.",
   },
     {
     id: "02",
@@ -304,3 +304,18 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
+
+fetch('http://127.0.0.1:5000/api/evaluaciones')
+  .then(response => response.json())
+  .then(data => {
+    console.log("Evaluaciones desde Python:", data);
+    
+    data.forEach(evalItem => {
+      if (evalItem.alerta) {
+        console.warn(`⚠️ ALERTA ACTIVA: ${evalItem.materia} (${evalItem.tipo}) se entrega en ${evalItem.dias_restantes} días.`);
+        // Aquí puedes cambiar el estilo o inyectar una tarjeta roja en tu HTML
+      }
+    });
+  })
+  .catch(error => console.error("Error al conectar con el servidor de Python:", error));
+
