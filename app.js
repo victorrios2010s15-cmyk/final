@@ -15,6 +15,22 @@ const evaluaciones = [
     descripcion: "El Carbono",
     criterio: "Taller sobre todo lo que tiene q ver con el carbono.",
   },
+    {
+    id: "03",
+    fecha: "2026-11-11",
+    materia: "Fisica",
+    tipo: "Examen",
+    descripcion: "Campo Electrico",
+    criterio: "Examen en pareja, todo lo visto sobre el campo electrico.",
+  },
+    {
+    id: "05",
+    fecha: "2026-11-13",
+    materia: "Musica",
+    tipo: "Taller Grupal",
+    descripcion: "El Pentagrama",
+    criterio: "Taller en grupo de 5 o 6 integrantes, en el cual se debe traer: papel bond, regla y marcadores.",
+  },
   {
     id: "04",
     fecha: "2026-11-12",
