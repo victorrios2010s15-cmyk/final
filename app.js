@@ -1,29 +1,5 @@
 const evaluaciones = [
   {
-    id: "01",
-    fecha: "2026-11-09",
-    materia: "Matematicas",
-    tipo: "Examen",
-    descripcion: "Determinante de 2do Grado",
-    criterio: "Examen sobre en todo lo visto en clase, formulas abajo.",
-  },
-    {
-    id: "02",
-    fecha: "2026-11-09",
-    materia: "Quimica",
-    tipo: "Taller",
-    descripcion: "El Carbono",
-    criterio: "Taller sobre todo lo que tiene q ver con el carbono.",
-  },
-    {
-    id: "03",
-    fecha: "2026-11-11",
-    materia: "Fisica",
-    tipo: "Examen",
-    descripcion: "Campo Electrico",
-    criterio: "Examen en pareja, todo lo visto sobre el campo electrico.",
-  },
-    {
     id: "05",
     fecha: "2026-11-13",
     materia: "Musica",
@@ -32,12 +8,12 @@ const evaluaciones = [
     criterio: "Taller en grupo de 5 o 6 integrantes, en el cual se debe traer: papel bond, regla y marcadores.",
   },
   {
-    id: "04",
-    fecha: "2026-11-12",
-    materia: "CS de la Tierra",
-    tipo: "Mapa Mental",
-    descripcion: "Placas Tectónicas",
-    criterio: "Mapa mental en clase sobre todo lo visto referente al tema. De 3 o 4 personas.",
+    id: "01",
+    fecha: "2026-11-13",
+    materia: "Ingles",
+    tipo: "Examen",
+    descripcion: "Adjetivos",
+    criterio: "Examen de ingles en pareja a cuaderno cerrado, el contenido del examen se encuentra en el apartado de Cuaderno de Clases Generales de la app.",
   },
 ];
 
