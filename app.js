@@ -51,7 +51,7 @@ const evaluaciones = [
     id: "07",
     fecha: "2026-11-20",
     materia: "Musica",
-    tipo: "Exposicion",
+    tipo: "Exposicion Grupal",
     descripcion: "Musica",
     criterio: "Se va a exponer sobre un musico que el profesor nos dio, en los papelitos que se dio, nos dio las indicaciones de los temas, y el grupo son los mismos del pentagrama, y se debe cantar musica del cantante.",
   },
