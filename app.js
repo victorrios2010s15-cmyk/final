@@ -63,6 +63,22 @@ const evaluaciones = [
     descripcion: "Culturas navideñas",
     criterio: "Se debe traer 2 recetas navideñas, para realizar el glosario en clase.",
   },
+  {
+    id: "09",
+    fecha: "2026-11-16",
+    materia: "Biologia",
+    tipo: "Cap 1",
+    descripcion: "Problema",
+    criterio: "Traer el Cap 1 completo en fisico.",
+  },  
+  {
+    id: "09",
+    fecha: "2026-11-19",
+    materia: "CS de la tierra",
+    tipo: "Exposicion Grupal",
+    descripcion: "Terremoto de Venezuela 24 de Junio",
+    criterio: "Exposicion grupal, los mismos de la tesis, se debe hablar todo lo referente.",
+  },
 ];
 
 function obtenerFechaLocal() {
