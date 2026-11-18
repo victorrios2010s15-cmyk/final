@@ -25,7 +25,7 @@ const evaluaciones = [
   },
   {
     id: "04",
-    fecha: "2026-11-19",
+    fecha: "2026-11-23",
     materia: "Matematicas",
     tipo: "Examen",
     descripcion: "Determinante de 3er Orden",
@@ -73,7 +73,7 @@ const evaluaciones = [
   },  
   {
     id: "09",
-    fecha: "2026-11-19",
+    fecha: "2026-11-23",
     materia: "CS de la tierra",
     tipo: "Exposicion Grupal",
     descripcion: "Terremoto de Venezuela 24 de Junio",
