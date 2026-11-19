@@ -32,14 +32,6 @@ const evaluaciones = [
     criterio: "Examen de matemamticas, no se sabe aun de cuantas personas es.",
   },
   {
-    id: "05",
-    fecha: "2026-11-20",
-    materia: "Fisica",
-    tipo: "Examen",
-    descripcion: "Campo electricos, fuerzas parciales",
-    criterio: "Examen de fisica, posiblemente de 3 personas, no se sabe aun, formulas abajo.",
-  },
-  {
     id: "06",
     fecha: "2026-11-20",
     materia: "Musica",
