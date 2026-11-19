@@ -79,6 +79,22 @@ const evaluaciones = [
     descripcion: "Terremoto de Venezuela 24 de Junio",
     criterio: "Exposicion grupal, los mismos de la tesis, se debe hablar todo lo referente.",
   },
+  {
+    id: "10",
+    fecha: "2026-11-20",
+    materia: "CRP",
+    tipo: "Glosario",
+    descripcion: "Grupal",
+    criterio: "Traer cada persona su glosario ya realizacdo, exponen los primeros 2 grupos, somos el grupo 3.",
+  },
+  {
+    id: "11",
+    fecha: "2026-11-20",
+    materia: "Ingles",
+    tipo: "Investigacion",
+    descripcion: "Investigacion",
+    criterio: "Se debe traer el tema nada mas sobre de q vas hacer el triptico, no hay q traer el triptico solo el tema.",
+  }, 
 ];
 
 function obtenerFechaLocal() {
